@@ -1,0 +1,38 @@
+{
+  "cli": {
+    "version": ">= 7.2.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_API_URI": "${EXPO_PUBLIC_API_URI}",
+        "EXPO_PUBLIC_API_TEST_URI": "${EXPO_PUBLIC_API_TEST_URI}",
+        "EXPO_PUBLIC_API_RW_URI": "${EXPO_PUBLIC_API_RW_URI}",
+        "EXPO_PUBLIC_DOCUMENTATION_URI": "${EXPO_PUBLIC_DOCUMENTATION_URI}",
+        "EXPO_PUBLIC_MAPBOX_ACCESS_TOKEN": "${EXPO_PUBLIC_MAPBOX_ACCESS_TOKEN}"
+      }
+    },
+    "preview": {
+      "distribution": "internal"
+    },
+    "production": {
+      "env": {
+        "EXPO_PUBLIC_API_URI": "${EXPO_PUBLIC_API_URI}",
+        "EXPO_PUBLIC_API_TEST_URI": "${EXPO_PUBLIC_API_TEST_URI}",
+        "EXPO_PUBLIC_API_RW_URI": "${EXPO_PUBLIC_API_RW_URI}",
+        "EXPO_PUBLIC_DOCUMENTATION_URI": "${EXPO_PUBLIC_DOCUMENTATION_URI}",
+        "EXPO_PUBLIC_MAPBOX_ACCESS_TOKEN": "${EXPO_PUBLIC_MAPBOX_ACCESS_TOKEN}"
+      },
+      "android": {
+        "buildType": "app-bundle"
+      },
+      "autoIncrement": true
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

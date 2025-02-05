@@ -361,7 +361,7 @@ export default function ListView({
   const exportPlots = async () => {
     if (!selectedFarmer) return;
 
-    const filePath = `${RNFS.DocumentDirectoryPath}/${selectedFarmer.id}_plots.json`;
+    const filePath = `${RNFS.DocumentDirectoryPath}/${selectedFarmer.id}_plots.geojson`;
 
     try {
       const plotsJson = JSON.stringify(featureCollection);
@@ -383,7 +383,7 @@ export default function ListView({
               title: i18n.t('plots.exportTitle'),
               url: `file://${filePath}`,
               type: 'application/json',
-              filename: `${selectedFarmer.id}_plots.json`,
+              filename: `${selectedFarmer.id}_plots.geojson`,
             };
             await Share.open(shareOptions);
           },

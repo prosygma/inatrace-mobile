@@ -66,6 +66,7 @@ export default ({ config }) => ({
         },
       ],
       'expo-localization',
+      // ['./react-native-fs-plugin.js'],
     ],
     experiments: {
       typedRoutes: true,

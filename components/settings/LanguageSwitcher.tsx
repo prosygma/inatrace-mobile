@@ -9,6 +9,7 @@ export default function LanguageSwitcher() {
     { label: i18n.t('userSettings.german'), value: 'de' },
     { label: i18n.t('userSettings.spanish'), value: 'es' },
     { label: i18n.t('userSettings.kinyarwanda'), value: 'rw' },
+    { label: i18n.t('userSettings.french'), value: 'fr' },
   ]);
 
   useEffect(() => {
@@ -18,6 +19,7 @@ export default function LanguageSwitcher() {
         { label: i18n.t('userSettings.german'), value: 'de' },
         { label: i18n.t('userSettings.spanish'), value: 'es' },
         { label: i18n.t('userSettings.kinyarwanda'), value: 'rw' },
+        { label: i18n.t('userSettings.french'), value: 'fr' },
       ]);
     });
 

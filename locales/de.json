@@ -5,8 +5,28 @@
   "loading": "Lädt...",
   "changeInstance": "Instanz ändern",
   "logoutError": "Die Sitzung konnte nicht sicher beendet werden. Bitte versuchen Sie es erneut.",
-  "legacyRecovery": {"title":"Offline-Daten wiederherstellen","pending":"Es gibt %{count} Offline-Einträge aus einer früheren Version.","confirm":"Fahren Sie nur fort, wenn ALLE Einträge zu diesem Server und Konto gehören. Die Originaldaten bleiben erhalten.","cancel":"Abbrechen","recover":"Wiederherstellen","error":"Offline-Daten konnten nicht wiederhergestellt werden. Die Originaldaten bleiben erhalten."},
-  "server": {"label":"Server","official":"Standardserver","address":"Serveradresse","save":"Server speichern","selectHint":"Server auswählen oder hinzufügen","add":"Server hinzufügen","empty":"Geben Sie eine Serveradresse ein.","invalid":"Geben Sie eine gültige HTTPS-Adresse ein.","duplicate":"Dieser Server ist bereits vorhanden.","unavailable":"Der Server konnte nicht überprüft werden.","loadError":"Gespeicherte Server konnten nicht geladen werden.","syncError":"Einige Einträge konnten nicht synchronisiert werden und bleiben ausstehend."},
+  "legacyRecovery": {
+    "title": "Offline-Daten wiederherstellen",
+    "pending": "Es gibt %{count} Offline-Einträge aus einer früheren Version.",
+    "confirm": "Fahren Sie nur fort, wenn ALLE Einträge zu diesem Server und Konto gehören. Die Originaldaten bleiben erhalten.",
+    "cancel": "Abbrechen",
+    "recover": "Wiederherstellen",
+    "error": "Offline-Daten konnten nicht wiederhergestellt werden. Die Originaldaten bleiben erhalten."
+  },
+  "server": {
+    "label": "Server",
+    "official": "Standardserver",
+    "address": "Serveradresse",
+    "save": "Server speichern",
+    "selectHint": "Server auswählen oder hinzufügen",
+    "add": "Server hinzufügen",
+    "empty": "Geben Sie eine Serveradresse ein.",
+    "invalid": "Geben Sie eine gültige HTTPS-Adresse ein.",
+    "duplicate": "Dieser Server ist bereits vorhanden.",
+    "unavailable": "Der Server konnte nicht überprüft werden.",
+    "loadError": "Gespeicherte Server konnten nicht geladen werden.",
+    "syncError": "Einige Einträge konnten nicht synchronisiert werden und bleiben ausstehend."
+  },
   "privacyPolicy": "Datenschutzrichtlinie",
   "guestAccess": "Gastzugang",
   "input": {
@@ -48,7 +68,8 @@
     "offlineMaps": "Offline-Karten",
     "offlineMapsSettings": "Einstellungen für Offline-Karten",
     "resetPassword": "Passwort zurücksetzen",
-    "logOut": "Ausloggen"
+    "logOut": "Ausloggen",
+    "french": "Francais"
   },
   "home": {
     "title": "Startseite",
@@ -247,5 +268,6 @@
     "syncedTitle": "Synchronisiert",
     "syncedMessage": "Daten erfolgreich synchronisiert",
     "guestWarning": "Sie müssen ein Konto haben, um Daten zu synchronisieren. Klicken Sie auf den unten stehenden Button, um zu beginnen"
-  }
+  },
+  "nameInstance": "Instanz"
 }

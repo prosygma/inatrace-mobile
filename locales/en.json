@@ -4,6 +4,7 @@
   "ok": "OK",
   "loading": "Loading...",
   "changeInstance": "Change instance",
+  "nameInstance": "Instance Name",
   "privacyPolicy": "Privacy policy",
   "guestAccess": "Guest access",
   "input": {
@@ -41,6 +42,7 @@
     "english": "English",
     "spanish": "Español",
     "german": "Deutsch",
+    "french": "Francais",
     "kinyarwanda": "Ikinyarwanda",
     "offlineMaps": "Offline maps",
     "offlineMapsSettings": "Offline maps settings",

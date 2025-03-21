@@ -5,12 +5,14 @@ import de from '../locales/de.json';
 import en from '../locales/en.json';
 import es from '../locales/es.json';
 import rw from '../locales/rw.json';
+import fr from '../locales/fr.json';
 
 const i18n = new I18n({
   en,
   es,
   de,
   rw,
+  fr,
 });
 
 i18n.locale = Localization.getLocales()[0].languageCode || 'en';

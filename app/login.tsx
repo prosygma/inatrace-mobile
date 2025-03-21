@@ -1,5 +1,3 @@
-import LoginLowerBlobSvg from '@/components/svg/LoginLowerBlob';
-import LoginUpperBlobSvg from '@/components/svg/LoginUpperBlob';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -10,18 +8,23 @@ import {
   Linking,
   ActivityIndicator,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
+import LoginLowerBlobSvg from '@/components/svg/LoginLowerBlob';
+import LoginUpperBlobSvg from '@/components/svg/LoginUpperBlob';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Modal from 'react-native-modalbox';
+
 import LanguageSwitcher from '@/components/settings/LanguageSwitcher';
+
 import { Globe, X } from 'lucide-react-native';
 
+import { AuthContext } from '@/context/AuthContext';
 import i18n from '@/locales/i18n';
 import { Input, InputPassword } from '@/components/common/Input';
 import { useState, useContext } from 'react';
 
-import { AuthContext } from '@/context/AuthContext';
 import { router } from 'expo-router';
+
 import cn from '@/utils/cn';
 
 export default function Login() {
@@ -106,6 +109,18 @@ export default function Login() {
     }
   };
 
+  const [inputInstance, setInputInstance] = useState('');
+
+  const handleConfirm = () => {
+    if (inputInstance.trim() !== '') {
+      let the_endpoint =
+        'https://' + inputInstance.toLowerCase() + '.inatrace.cm';
+      setInstance(the_endpoint);
+      console.log(the_endpoint);
+      setInstanceChange(false);
+    }
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View className="flex flex-col justify-between h-full bg-White">
@@ -172,36 +187,46 @@ export default function Login() {
                 </Pressable>
               </View>
 
+              {/*<View className="pl-3 border rounded-md border-LightGray">*/}
+              {/*  {instances.map((ins, index) => (*/}
+              {/*    <Pressable*/}
+              {/*      key={index}*/}
+              {/*      className={cn(*/}
+              {/*        'flex flex-row justify-between pb-4 pr-3 mt-4 border-b border-b-LightGray',*/}
+              {/*        index === instances.length - 1 && 'border-b-0'*/}
+              {/*      )}*/}
+              {/*      onPress={() => setInstance(ins ?? '')}*/}
+              {/*    >*/}
+              {/*      <Text className={cn(instance !== ins && 'text-DarkGray')}>*/}
+              {/*        {ins}*/}
+              {/*      </Text>*/}
+              {/*      {instance === ins ? (*/}
+              {/*        <View className="flex flex-row items-center justify-center w-5 h-5 rounded-full bg-[#333333]">*/}
+              {/*          <View className="flex flex-row items-center justify-center w-4 h-4 rounded-full bg-White">*/}
+              {/*            <View className="flex flex-row items-center justify-center w-2.5 h-2.5 rounded-full bg-[#333333]" />*/}
+              {/*          </View>*/}
+              {/*        </View>*/}
+              {/*      ) : (*/}
+              {/*        <View className="flex flex-row items-center justify-center w-5 h-5 rounded-full bg-DarkGray">*/}
+              {/*          <View className="flex flex-row items-center justify-center w-4 h-4 rounded-full bg-White" />*/}
+              {/*        </View>*/}
+              {/*      )}*/}
+              {/*    </Pressable>*/}
+              {/*  ))}*/}
+              {/*</View>*/}
               <View className="pl-3 border rounded-md border-LightGray">
-                {instances.map((ins, index) => (
-                  <Pressable
-                    key={index}
-                    className={cn(
-                      'flex flex-row justify-between pb-4 pr-3 mt-4 border-b border-b-LightGray',
-                      index === instances.length - 1 && 'border-b-0'
-                    )}
-                    onPress={() => setInstance(ins ?? '')}
-                  >
-                    <Text className={cn(instance !== ins && 'text-DarkGray')}>
-                      {ins}
-                    </Text>
-                    {instance === ins ? (
-                      <View className="flex flex-row items-center justify-center w-5 h-5 rounded-full bg-[#333333]">
-                        <View className="flex flex-row items-center justify-center w-4 h-4 rounded-full bg-White">
-                          <View className="flex flex-row items-center justify-center w-2.5 h-2.5 rounded-full bg-[#333333]" />
-                        </View>
-                      </View>
-                    ) : (
-                      <View className="flex flex-row items-center justify-center w-5 h-5 rounded-full bg-DarkGray">
-                        <View className="flex flex-row items-center justify-center w-4 h-4 rounded-full bg-White" />
-                      </View>
-                    )}
-                  </Pressable>
-                ))}
+                <Text style={{ fontSize: 18, fontWeight: '500' }}>
+                  {i18n.t('nameInstance')}
+                </Text>
+                <Input
+                  value={inputInstance}
+                  onChangeText={setInputInstance}
+                  placeholder={i18n.t('nameInstance')}
+                />
               </View>
 
               <Pressable
-                onPress={() => setInstanceChange(false)}
+                onPress={handleConfirm}
                 className="py-2 mt-4 rounded-md bg-Orange"
               >
                 <Text className="text-center text-white">{i18n.t('ok')}</Text>

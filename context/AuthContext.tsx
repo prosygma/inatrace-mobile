@@ -1,23 +1,26 @@
-import { createContext, useEffect, useState } from 'react';
-import { useStorageState } from './useStorageState';
-import { User } from '@/types/user';
+/* eslint-disable no-useless-concat */
+
 import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
 import axios from 'axios';
-import RNFetchBlob from 'rn-fetch-blob';
-
-import { LogInResponse, RequestParams } from '@/types/auth';
-import { Farmer, ProductType, ProductTypeWithCompanyId } from '@/types/farmer';
-import { CompanyInfo } from '@/types/company';
-import { Country } from '@/types/country';
-import { uuid } from 'expo-modules-core';
-import { Plot } from '@/types/plot';
 import { decode } from 'base-64';
-import realm from '@/realm/useRealm';
-import { FarmerSchema, PlotSchema } from '@/realm/schemas';
+import { uuid } from 'expo-modules-core';
+import { createContext, useEffect, useState } from 'react';
+import { ToastAndroid, Platform } from 'react-native';
+import RNFetchBlob from 'rn-fetch-blob';
 
 import guestCountries from '@/context/guestCountries.json';
 import guestProductTypes from '@/context/guestProductTypes.json';
+import { FarmerSchema, PlotSchema } from '@/realm/schemas';
+import realm from '@/realm/useRealm';
 import { useSelectedFarmerState } from '@/state/state';
+import { LogInResponse, RequestParams } from '@/types/auth';
+import { CompanyInfo } from '@/types/company';
+import { Country } from '@/types/country';
+import { Farmer, ProductType, ProductTypeWithCompanyId } from '@/types/farmer';
+import { Plot } from '@/types/plot';
+import { User } from '@/types/user';
+
+import { useStorageState } from './useStorageState';
 
 let creatingImageCacheDir: any = null;
 
@@ -146,6 +149,20 @@ export function SessionProvider(props: React.PropsWithChildren<any>) {
     password: string
   ): Promise<LogInResponse> => {
     try {
+      // const responseLogin = await axios.post(
+      //   'https://test1front.inatrace.cm/api/user/login',
+      //   {
+      //     username: 'admin@inatrace.com',
+      //     password: 'inatrace',
+      //   },
+      //   {
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //     },
+      //     timeout: 10000, // Définir un timeout raisonnable (10 secondes)
+      //   }
+      // );
+
       const responseLogin = await axios.post(`${instance}/api/user/login`, {
         username,
         password,
@@ -165,6 +182,7 @@ export function SessionProvider(props: React.PropsWithChildren<any>) {
           `${instance}/api/user/profile`
         );
 
+        // ToastAndroid.show(JSON.stringify(responseUserData), ToastAndroid.SHORT);
         if (responseUserData.data.status === 'OK') {
           setGuestAccess(false);
           await deleteGuestFarmerIfNecessary();
@@ -216,9 +234,10 @@ export function SessionProvider(props: React.PropsWithChildren<any>) {
         }
       }
     } catch (error: any) {
-      if (error.response.data.status === 'AUTH_ERROR') {
+      if (error.response?.data.status === 'AUTH_ERROR') {
         return { success: false, errorStatus: 'AUTH_ERROR' };
       } else {
+        console.log(JSON.stringify(error.request));
         return { success: false, errorStatus: 'GENERIC_ERROR' };
       }
     }

@@ -4,6 +4,7 @@
   "ok": "OK",
   "loading": "Lädt...",
   "changeInstance": "Instanz ändern",
+  "nameInstance": "Instanz",
   "privacyPolicy": "Datenschutzrichtlinie",
   "guestAccess": "Gastzugang",
   "input": {
@@ -41,6 +42,7 @@
     "english": "English",
     "spanish": "Español",
     "german": "Deutsch",
+    "french": "Francais",
     "kinyarwanda": "Ikinyarwanda",
     "offlineMaps": "Offline-Karten",
     "offlineMapsSettings": "Einstellungen für Offline-Karten",

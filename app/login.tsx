@@ -111,20 +111,36 @@ export default function Login() {
 
   const [inputInstance, setInputInstance] = useState('');
 
-  const handleConfirm = () => {
-    const trimmedInstance = inputInstance.trim();
+  const getAvailableDomainUrl = async (subdomain: string) => {
+    const urls = [
+      `${subdomain}.inatrace.cm`,
+      `${subdomain}.cm`,
+      `${subdomain}.com`,
+    ];
 
-    if (!trimmedInstance) return; // rien à faire si vide
+    for (const d of urls) {
+      const res = await fetch(`https://dns.google/resolve?name=${d}`);
+      const json = await res.json();
+      if (json.Answer && json.Answer.length > 0) {
+        console.log(`${d} exists`);
+        return `https://${d}`;
+      }
+    }
+    return null;
+  };
 
-    const lowerInstance = trimmedInstance.toLowerCase();
-    const theEndpoint =
-      lowerInstance === "cocoageotrack"
-        ? "https://cocoageotrack.cm"
-        : `https://${lowerInstance}.inatrace.cm`;
-
-    setInstance(theEndpoint);
-    setInstanceChange(false);
-};
+  const handleConfirm = async () => {
+    if (inputInstance.trim() !== '') {
+      const the_endpoint = await getAvailableDomainUrl(
+        inputInstance.toLowerCase()
+      );
+      if (typeof the_endpoint === 'string') {
+        setInstance(the_endpoint);
+        console.log(the_endpoint);
+        setInstanceChange(false);
+      }
+    }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

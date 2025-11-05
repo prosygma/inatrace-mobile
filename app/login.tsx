@@ -111,31 +111,35 @@ export default function Login() {
   };
 
   const [inputInstance, setInputInstance] = useState('');
-  
-const getAvailableDomainUrl = async (subdomain) => {
-  const urls = [
-    `${subdomain}.inatrace.cm`,
-    `${subdomain}.cm`,
-    `${subdomain}.com`,
-  ];
 
-  for (const d of urls) {
-    const res = await fetch(`https://dns.google/resolve?name=${d}`);
-    const json = await res.json();
+  const getAvailableDomainUrl = async (subdomain: string) => {
+    const urls = [
+      `${subdomain}.inatrace.cm`,
+      `${subdomain}.cm`,
+      `${subdomain}.com`,
+    ];
 
-    if (json.Answer && json.Answer.length > 0) {
-      console.log(`${d} exists`);
-      return `https://${d}`;
+    for (const d of urls) {
+      const res = await fetch(`https://dns.google/resolve?name=${d}`);
+      const json = await res.json();
+      if (json.Answer && json.Answer.length > 0) {
+        console.log(`${d} exists`);
+        return `https://${d}`;
+      }
     }
-  }
+    return null;
+  };
 
-  return null;
-}
   const handleConfirm = async () => {
     if (inputInstance.trim() !== '') {
-      let the_endpoint = await getAvailableDomainUrl(inputInstance.toLowerCase());
-      setInstance(the_endpoint);
-      setInstanceChange(false);
+      const the_endpoint = await getAvailableDomainUrl(
+        inputInstance.toLowerCase()
+      );
+      if (typeof the_endpoint === 'string') {
+        setInstance(the_endpoint);
+        console.log(the_endpoint);
+        setInstanceChange(false);
+      }
     }
   };
 

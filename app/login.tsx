@@ -110,11 +110,29 @@ export default function Login() {
   };
 
   const [inputInstance, setInputInstance] = useState('');
+  
+const getAvailableDomainUrl = async (subdomain) => {
+  const urls = [
+    `${subdomain}.inatrace.cm`,
+    `${subdomain}.cm`,
+    `${subdomain}.com`,
+  ];
 
-  const handleConfirm = () => {
+  for (const d of urls) {
+    const res = await fetch(`https://dns.google/resolve?name=${d}`);
+    const json = await res.json();
+
+    if (json.Answer && json.Answer.length > 0) {
+      console.log(`${d} exists`);
+      return `https://${d}`;
+    }
+  }
+
+  return null;
+}
+  const handleConfirm = async () => {
     if (inputInstance.trim() !== '') {
-      let the_endpoint =
-        'https://' + inputInstance.toLowerCase() + '.inatrace.cm';
+      let the_endpoint = await getAvailableDomainUrl(inputInstance.toLowerCase());
       setInstance(the_endpoint);
       console.log(the_endpoint);
       setInstanceChange(false);

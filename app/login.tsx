@@ -112,16 +112,19 @@ export default function Login() {
   const [inputInstance, setInputInstance] = useState('');
 
   const handleConfirm = () => {
-    if (inputInstance.trim() !== '') {
-      if(inputInstance.toLowerCase=="cocoageotrack"){
-      let the_endpoint ='https://cocoageotrack.cm';
-      }else{ // cas sous domaine inatrace
-        let the_endpoint = 'https://' + inputInstance.toLowerCase() + '.inatrace.cm';
-      }
-      setInstance(the_endpoint);
-      setInstanceChange(false);
-    }
-  };
+    const trimmedInstance = inputInstance.trim();
+
+    if (!trimmedInstance) return; // rien à faire si vide
+
+    const lowerInstance = trimmedInstance.toLowerCase();
+    const theEndpoint =
+      lowerInstance === "cocoageotrack"
+        ? "https://cocoageotrack.cm"
+        : `https://${lowerInstance}.inatrace.cm`;
+
+    setInstance(theEndpoint);
+    setInstanceChange(false);
+};
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

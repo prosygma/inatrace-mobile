@@ -188,6 +188,8 @@ export default function DataSync() {
                   : null,
                 unit: plot.data.size.split(' ')[1],
                 size: parseFloat(plot.data.size.split(' ')[0]),
+                centerLatitude: parseFloat(plot.data.centerLatitude),
+                centerLongitude: parseFloat(plot.data.centerLongitude),
                 geoId: '',
                 organicStartOfTransition: plot.data.organicStartOfTransition
                   ? plot.data.organicStartOfTransition
@@ -246,6 +248,8 @@ export default function DataSync() {
             : null,
           unit: plot.data.size.split(' ')[1],
           size: parseFloat(plot.data.size.split(' ')[0]),
+          centerLatitude: parseFloat(plot.data.centerLatitude),
+          centerLongitude: parseFloat(plot.data.centerLongitude),
           geoId: '',
           organicStartOfTransition: plot.data.organicStartOfTransition
             ? plot.data.organicStartOfTransition

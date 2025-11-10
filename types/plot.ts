@@ -8,6 +8,8 @@ export interface Plot {
   certification: string;
   organicStartOfTransition: string;
   featureInfo: FeatureInfo;
+  centerLatitude: number;
+  centerLongitude: number;
 }
 
 export interface FeatureInfo {

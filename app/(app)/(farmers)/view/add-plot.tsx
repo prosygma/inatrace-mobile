@@ -24,6 +24,8 @@ type PlotInto = {
   geoId: string;
   certification: string;
   organicStartOfTransition: string;
+  centerLatitude: string;
+  centerLongitude: string;
 };
 
 type PlotInfoErrors = {
@@ -221,6 +223,8 @@ export default function AddPlot() {
             numberOfPlants: parseInt(plotInfo.numberOfPlants, 10),
             unit: newPlot.size.split(' ')[1],
             size: parseFloat(newPlot.size.split(' ')[0]),
+            centerLatitude: parseFloat(plotInfo.centerLatitude),
+            centerLongitude: parseFloat(plotInfo.centerLongitude),
             geoId: '',
             organicStartOfTransition: plotInfo.organicStartOfTransition,
             certification: plotInfo.certification,
@@ -253,7 +257,9 @@ export default function AddPlot() {
           size: newPlot?.size ?? '',
           geoId: newPlot?.geoId ?? '',
           certification: plotInfo.certification,
-          organicStartOfTransition: plotInfo.organicStartOfTransition,
+          organicStartOfTransition: plotInfo.organicStartOfTransition,          
+          centerLatitude: parseFloat(plotInfo?.centerLatitude),
+          centerLongitude: parseFloat(plotInfo?.centerLongitude),
           featureInfo: newPlot?.featureInfo ?? {
             type: 'Feature',
             properties: {},
@@ -327,6 +333,20 @@ export default function AddPlot() {
               isNumeric: true,
               setValue: (value: string) =>
                 updateState(['numberOfPlants'], value),
+            },
+             {
+              type: 'type',
+              name: i18n.t('plots.addPlot.centerLatitude') + '*',
+              placeholder: i18n.t('input.type'),
+              value: plotInfo?.centerLatitude ?? '',
+              setValue: (value: string) => updateState(['centerLatitude'], value),
+            },
+            {
+              type: 'type',
+              name: i18n.t('plots.addPlot.centerLongitude') + '*',
+              placeholder: i18n.t('input.type'),
+              value: plotInfo?.centerLongitude ?? '',
+              setValue: (value: string) => updateState(['centerLongitude'], value),
             },
             {
               type: 'view',

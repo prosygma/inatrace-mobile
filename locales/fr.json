@@ -214,7 +214,9 @@
       "discardChangesMessage": "Êtes-vous sûr de vouloir quitter le mode cartographie ? Les points enregistrés seront perdus.",
       "discardChangesButton": "Confirmer",
       "error": "Erreur",
-      "errorMessage": "Une erreur s'est produite lors de l'enregistrement de la parcelle"
+      "errorMessage": "Une erreur s'est produite lors de l'enregistrement de la parcelle",
+      "centerLatitude": "Latitude Point Central",
+      "centerLongitude": "Longitude Point Central"
     },
     "totalArea": "superficie totale",
     "summaryTitle": "Résumé",

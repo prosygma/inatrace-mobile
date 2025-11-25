@@ -425,16 +425,25 @@ export default function MapView({
 
     featureInfo.id = id;
 
+    // ✅ Calcul du centroïde
+  const centroid = turf.centroid(featureInfo as any);
+  const [longitudeC, latitudeC] = centroid.geometry.coordinates;
+
+  // ✅ Surface en hectares
+  const area = (turf.area(featureInfo.geometry) / 10000).toFixed(2);
+
     setNewPlot({
       id,
       plotName: '',
       crop: '',
       numberOfPlants: 0,
-      size: (turf.area(featureInfo.geometry) / 10000).toFixed(2) + ' ha',
+      size:  '${area} ha',
       geoId: '',
       certification: '',
       organicStartOfTransition: '',
       featureInfo,
+      centerLatitude: latitudeC ,
+      centerLongitude: longitudeC
     });
 
     router.push('/(app)/(farmers)/view/add-plot');

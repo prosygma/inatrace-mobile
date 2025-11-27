@@ -257,6 +257,8 @@ export default function MapView({
             geoId: plotData.geoId,
             certification: plotData.certification,
             organicStartOfTransition: plotData.organicStartOfTransition,
+            centerLatitude: plotData.centerLatitude,
+            centerLongitude: plotData.centerLongitude,
             synced: false,
           });
         }
@@ -290,6 +292,8 @@ export default function MapView({
             geoId: plot.geoId,
             certification: plot.certification,
             organicStartOfTransition: plot.organicStartOfTransition,
+            centerLatitude: plot.centerLatitude,
+            centerLongitude: plot.centerLongitude,
             synced: true,
           });
         }
@@ -437,7 +441,7 @@ export default function MapView({
       plotName: '',
       crop: '',
       numberOfPlants: 0,
-      size:  '${area} ha',
+      size:  `${area} ha`,
       geoId: '',
       certification: '',
       organicStartOfTransition: '',

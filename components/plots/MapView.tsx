@@ -259,7 +259,7 @@ export default function MapView({
             organicStartOfTransition: plotData.organicStartOfTransition,
             centerLatitude: plotData.centerLatitude,
             centerLongitude: plotData.centerLongitude,
-            synced: false,
+            synced: false,   
           });
         }
       }
@@ -441,7 +441,7 @@ export default function MapView({
       plotName: '',
       crop: '',
       numberOfPlants: 0,
-      size:  `${area} ha`,
+      size:  area +' ha',
       geoId: '',
       certification: '',
       organicStartOfTransition: '',

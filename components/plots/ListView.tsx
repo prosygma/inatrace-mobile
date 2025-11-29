@@ -7,7 +7,7 @@ import {
   Linking,
 } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
-import Share from 'react-native-share';
+//import Share from 'react-native-share';
 import RNFS from 'react-native-fs';
 import ViewSwitcher, { ViewSwitcherProps } from './ViewSwitcher';
 import { useContext, useEffect, useState } from 'react';

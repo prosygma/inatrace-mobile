@@ -247,6 +247,24 @@
     "offlineMode": "Offline mode",
     "syncedTitle": "Synced",
     "syncedMessage": "Data successfully synced",
-    "guestWarning": "You need to have an account to sync data, click on the button below to get started"
+    "guestWarning": "You need to have an account to sync data, click on the button below to get started",
+    "error": "Error",
+    "noConnection": "No connection",
+    "noSelection": "Please select at least one plot",
+    "partialSuccess": "Partial success",
+    "synced": "Synced",
+    "failed": "Failed",
+    "allFailed": "All synchronizations failed",
+    "errorMessage": "Sync error",
+    "selectAll": "Select all",
+    "deselectAll": "Deselect all",
+    "exportFailed": "Export failed",
+    "exportTitle": "Failed sync data",
+    "exportSuccess": "Export successful",
+    "exportSuccessMessage": "The Excel file has been created successfully",
+    "exportError": "Export error",
+    "exportErrorMessage": "Error during export",
+    "noFailedItems": "No failed items to export",
+    "sharingNotAvailable": "File sharing is not available on this device"
   }
 }

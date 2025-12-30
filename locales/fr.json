@@ -247,6 +247,24 @@
     "offlineMode": "Mode hors ligne",
     "syncedTitle": "Synchronisé",
     "syncedMessage": "Données synchronisées avec succès",
-    "guestWarning": "Vous devez avoir un compte pour synchroniser les données, cliquez sur le bouton ci-dessous pour commencer"
+    "guestWarning": "Vous devez avoir un compte pour synchroniser les données, cliquez sur le bouton ci-dessous pour commencer",
+    "error": "Erreur",
+    "noConnection": "Pas de connexion Internet",
+    "noSelection": "Veuillez sélectionner au moins une parcelle",
+    "partialSuccess": "Synchronisation partielle",
+    "synced": "Synchronisés",
+    "failed": "Échoués",
+    "allFailed": "Toutes les synchronisations ont échoué",
+    "errorMessage": "Erreur de synchronisation",
+    "selectAll": "Tout sélectionner",
+    "deselectAll": "Tout désélectionner",
+    "exportFailed": "Exporter les échecs",
+    "exportTitle": "Données de synchronisation échouées",
+    "exportSuccess": "Export réussi",
+    "exportSuccessMessage": "Le fichier Excel a été créé avec succès",
+    "exportError": "Erreur d'export",
+    "exportErrorMessage": "Erreur lors de l'export",
+    "noFailedItems": "Aucun élément échoué à exporter",
+    "sharingNotAvailable": "Le partage de fichiers n'est pas disponible sur cet appareil"
   }
 }

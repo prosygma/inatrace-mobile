@@ -29,6 +29,7 @@
     "clsx": "^2.1.0",
     "dotenv": "^16.4.7",
     "expo": "~50.0.20",
+    "expo-file-system": "~16.0.9",
     "expo-font": "~11.10.3",
     "expo-haptics": "^12.8.1",
     "expo-linking": "~6.2.2",
@@ -36,6 +37,7 @@
     "expo-location": "^16.5.5",
     "expo-router": "~3.4.10",
     "expo-secure-store": "^12.8.1",
+    "expo-sharing": "~11.10.0",
     "expo-splash-screen": "~0.26.5",
     "expo-status-bar": "~1.11.1",
     "expo-system-ui": "~2.9.4",
@@ -68,6 +70,7 @@
     "rn-fetch-blob": "^0.12.0",
     "tailwind-merge": "^2.2.1",
     "tailwind-react-native-classnames": "^1.5.1",
+    "xlsx": "^0.18.5",
     "zustand": "^5.0.1"
   },
   "devDependencies": {

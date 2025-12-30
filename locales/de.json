@@ -245,6 +245,16 @@
     "offlineMode": "Offline-Modus",
     "syncedTitle": "Synchronisiert",
     "syncedMessage": "Daten erfolgreich synchronisiert",
-    "guestWarning": "Sie müssen ein Konto haben, um Daten zu synchronisieren. Klicken Sie auf den unten stehenden Button, um zu beginnen"
+    "guestWarning": "Sie müssen ein Konto haben, um Daten zu synchronisieren. Klicken Sie auf den unten stehenden Button, um zu beginnen",
+    "error": "Fehler",
+    "noConnection": "Keine Internetverbindung",
+    "noSelection": "Wählen Sie mindestens eine Parzelle aus",
+    "partialSuccess": "Teilweise erfolgreich",
+    "synced": "Synchronisiert",
+    "failed": "Fehlgeschlagen",
+    "allFailed": "Alle synchronisierungen fehlgeschlagen",
+    "errorMessage": "Fehler beim Synchronisieren",
+    "selectAll": "Alle auswählen",
+    "deselectAll": "Alle abwählen"
   }
 }

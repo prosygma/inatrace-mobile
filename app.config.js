@@ -76,7 +76,7 @@ export default ({ config }) => ({
         origin: false,
       },
       eas: {
-        projectId: '92b692fc-0be1-40d1-9c1d-bd10d94be7d0',
+        projectId: 'd383e2c2-e276-4ab5-821e-5cce5f10914d',
       },
       EXPO_PUBLIC_API_URI: process.env.EXPO_PUBLIC_API_URI,
       EXPO_PUBLIC_API_TEST_URI: process.env.EXPO_PUBLIC_API_TEST_URI,

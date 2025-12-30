@@ -257,9 +257,7 @@ export default function MapView({
             geoId: plotData.geoId,
             certification: plotData.certification,
             organicStartOfTransition: plotData.organicStartOfTransition,
-            centerLatitude: plotData.centerLatitude,
-            centerLongitude: plotData.centerLongitude,
-            synced: false,   
+            synced: false,
           });
         }
       }
@@ -429,25 +427,20 @@ export default function MapView({
 
     featureInfo.id = id;
 
-    // ✅ Calcul du centroïde
-  const centroid = turf.centroid(featureInfo as any);
-  const [longitudeC, latitudeC] = centroid.geometry.coordinates;
 
-  // ✅ Surface en hectares
-  const area = (turf.area(featureInfo.geometry) / 10000).toFixed(2);
+    // Surface en hectares
+    const area = (turf.area(featureInfo.geometry) / 10000).toFixed(2);
 
     setNewPlot({
       id,
       plotName: '',
       crop: '',
       numberOfPlants: 0,
-      size:  area +' ha',
+      size: area + ' ha',
       geoId: '',
       certification: '',
       organicStartOfTransition: '',
-      featureInfo,
-      centerLatitude: latitudeC ,
-      centerLongitude: longitudeC
+      featureInfo
     });
 
     router.push('/(app)/(farmers)/view/add-plot');
@@ -525,10 +518,10 @@ export default function MapView({
           name: i18n.t('plots.addPlot.organicStartOfTransition'),
           value: plot.organicStartOfTransition
             ? Intl.DateTimeFormat('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: '2-digit',
-              }).format(new Date(plot.organicStartOfTransition))
+              year: 'numeric',
+              month: 'long',
+              day: '2-digit',
+            }).format(new Date(plot.organicStartOfTransition))
             : '',
           editable: false,
         },
@@ -935,7 +928,7 @@ export default function MapView({
                   </Pressable>
 
                   {location?.coords.accuracy &&
-                  location?.coords.accuracy > 10 ? (
+                    location?.coords.accuracy > 10 ? (
                     <Pressable
                       onPress={() => setManualMode(!manualMode)}
                       className="flex flex-row items-center justify-center px-5 py-3 mt-2 rounded-md bg-Orange"

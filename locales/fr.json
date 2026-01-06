@@ -265,6 +265,8 @@
     "exportError": "Erreur d'export",
     "exportErrorMessage": "Erreur lors de l'export",
     "noFailedItems": "Aucun élément échoué à exporter",
-    "sharingNotAvailable": "Le partage de fichiers n'est pas disponible sur cet appareil"
+    "sharingNotAvailable": "Le partage de fichiers n'est pas disponible sur cet appareil",
+    "exportToExcel": "Exporter vers Excel",
+    "noDataToExport": "Aucune donnée à exporter"
   }
 }

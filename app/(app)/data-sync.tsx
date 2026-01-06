@@ -374,7 +374,6 @@ export default function DataSync() {
 
       // Afficher le résultat approprié
       await getItemsToSync();
-
       if (failedFarmersCount === 0 && failedPlotsCount === 0) {
         Alert.alert(
           i18n.t('synced.syncedTitle'),
@@ -403,11 +402,14 @@ export default function DataSync() {
     }
   };
 
-  const exportFailedToExcel = async () => {
-    if (failedItems.farmers.length === 0 && failedItems.plots.length === 0) {
+  const exportToExcel = async () => {
+    // Vérifier qu'il y a des données à exporter
+    const hasDataToExport = selectedPlots.size > 0 || farmersToSync.length > 0;
+
+    if (!hasDataToExport) {
       Alert.alert(
         i18n.t('synced.exportError'),
-        i18n.t('synced.noFailedItems')
+        i18n.t('synced.noDataToExport')
       );
       return;
     }
@@ -415,11 +417,22 @@ export default function DataSync() {
     setExporting(true);
 
     try {
+      // Filtrer les parcelles sélectionnées ou toutes si aucune sélection
+      const plotsToExport = selectedPlots.size > 0
+        ? plotsToSync.filter((p: any) => selectedPlots.has(p.id))
+        : plotsToSync;
+
       // Préparer les données pour l'export
       const excelData: any[] = [];
 
-      // Ajouter les agriculteurs et leurs parcelles qui ont échoué
-      for (const farmer of failedItems.farmers) {
+      // Ajouter les agriculteurs et leurs parcelles
+      for (const farmer of farmersToSync) {
+        // Trouver les parcelles de cet agriculteur dans la sélection
+        const farmerPlots = plotsToExport.filter(
+          (plot: any) => plot.farmerId === farmer.id
+        );
+
+
         const baseRow = {
           'Farmer Name': farmer.data.name || '',
           'Farmer Surname': farmer.data.surname || '',
@@ -435,8 +448,8 @@ export default function DataSync() {
           'Organic Production': farmer.data.organicProduction ? 'Yes' : 'No',
         };
 
-        if (farmer.plots && farmer.plots.length > 0) {
-          for (const plot of farmer.plots) {
+        if (farmerPlots.length > 0) {
+          for (const plot of farmerPlots) {
             excelData.push({
               ...baseRow,
               'Plot Name': plot.data.plotName || '',
@@ -451,6 +464,7 @@ export default function DataSync() {
             });
           }
         } else {
+          // Ajouter l'agriculteur sans parcelle si pas de parcelles associées dans la sélection
           excelData.push({
             ...baseRow,
             'Plot Name': '',
@@ -466,9 +480,14 @@ export default function DataSync() {
         }
       }
 
-      // Ajouter les parcelles orphelines qui ont échoué
-      for (const plot of failedItems.plots) {
-        const farmer = [...farmersToSync, ...farmersSynced].find(
+      // Ajouter les parcelles orphelines (dont l'agriculteur est déjà synchronisé)
+      const orphanPlots = plotsToExport.filter(
+        (plot: any) => !farmersToSync.find((f: any) => f.id === plot.farmerId)
+      );
+
+      for (const plot of orphanPlots) {
+
+        const farmer = farmersSynced.find(
           (f: any) => f.id === plot.farmerId
         );
 
@@ -527,14 +546,14 @@ export default function DataSync() {
       ];
       ws['!cols'] = columnWidths;
 
-      XLSX.utils.book_append_sheet(wb, ws, 'Failed Sync');
+      XLSX.utils.book_append_sheet(wb, ws, 'Farmers and Plots');
 
       // Générer le fichier
       const wbout = XLSX.write(wb, { type: 'base64', bookType: 'xlsx' });
 
       // Sauvegarder le fichier
       const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-      const fileName = `failed_sync_${timestamp}.xlsx`;
+      const fileName = `farmers_plots_export_${timestamp}.xlsx`;
       const fileUri = `${FileSystem.documentDirectory}${fileName}`;
 
       await FileSystem.writeAsStringAsync(fileUri, wbout, {
@@ -600,7 +619,7 @@ export default function DataSync() {
     await getItemsToSync();
   };
 
-  const hasFailedItems = failedItems.farmers.length > 0 || failedItems.plots.length > 0;
+  const hasDataToSync = farmersToSync.length > 0 || plotsToSync.length > 0;
 
   return (
     <View>
@@ -829,10 +848,10 @@ export default function DataSync() {
           </BottomSheetModal>
 
           <View className="pb-5 bg-White">
-            {hasFailedItems && (
+            {hasDataToSync && (
               <Pressable
                 className="mb-2"
-                onPress={exportFailedToExcel}
+                onPress={exportToExcel}
                 disabled={exporting}
               >
                 {({ pressed }) => (
@@ -849,7 +868,8 @@ export default function DataSync() {
                     )}
                     <View className="w-2" />
                     <Text className="text-[16px] text-White font-semibold">
-                      {i18n.t('synced.exportFailed')}
+                      {i18n.t('synced.exportToExcel')}
+                      {selectedPlots.size > 0 && ` (${selectedPlots.size})`}
                     </Text>
                   </View>
                 )}

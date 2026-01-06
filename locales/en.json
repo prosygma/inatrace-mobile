@@ -265,6 +265,8 @@
     "exportError": "Export error",
     "exportErrorMessage": "Error during export",
     "noFailedItems": "No failed items to export",
-    "sharingNotAvailable": "File sharing is not available on this device"
+    "sharingNotAvailable": "File sharing is not available on this device",
+    "exportToExcel": "Export to Excel",
+    "noDataToExport": "No data to export"
   }
 }

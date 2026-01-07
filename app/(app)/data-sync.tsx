@@ -59,15 +59,7 @@ export default function DataSync() {
   const [farmersToSync, setFarmersToSync] = useState<any>([]);
   const [plotsToSync, setPlotsToSync] = useState<any>([]);
 
-  // Nouveaux états pour la sélection
   const [selectedPlots, setSelectedPlots] = useState<Set<string>>(new Set());
-  const [selectedFarmers, setSelectedFarmers] = useState<Set<string>>(new Set());
-
-  // État pour les échecs de synchronisation
-  const [failedItems, setFailedItems] = useState<{
-    farmers: any[];
-    plots: any[];
-  }>({ farmers: [], plots: [] });
 
   const [loading, setLoading] = useState<boolean>(true);
   const [syncing, setSyncing] = useState<boolean>(false);
@@ -139,9 +131,7 @@ export default function DataSync() {
       setPlotsToSync(plotsData);
       setFarmersSynced(farmersDataSynced);
 
-      // Réinitialiser les sélections
       setSelectedPlots(new Set());
-      setSelectedFarmers(new Set());
     } catch (error) {
       console.error(error);
     } finally {
@@ -149,7 +139,6 @@ export default function DataSync() {
     }
   };
 
-  // Fonction pour toggle la sélection d'une parcelle
   const togglePlotSelection = (plotId: string) => {
     setSelectedPlots(prev => {
       const newSet = new Set(prev);
@@ -162,7 +151,6 @@ export default function DataSync() {
     });
   };
 
-  // Fonction pour sélectionner/désélectionner toutes les parcelles
   const toggleAllPlots = () => {
     if (selectedPlots.size === plotsToSync.length) {
       setSelectedPlots(new Set());
@@ -180,7 +168,6 @@ export default function DataSync() {
       return;
     }
 
-    // Vérifier qu'il y a quelque chose à synchroniser
     if (selectedPlots.size === 0 && farmersToSync.length === 0) {
       Alert.alert(
         i18n.t('synced.error'),
@@ -191,17 +178,13 @@ export default function DataSync() {
 
     setSyncing(true);
 
-    // Variables pour tracker le succès/échec
     let syncedFarmersCount = 0;
     let syncedPlotsCount = 0;
     let failedFarmersCount = 0;
     let failedPlotsCount = 0;
     const errors: string[] = [];
-    const failedFarmersData: any[] = [];
-    const failedPlotsData: any[] = [];
 
     try {
-      // Filtrer les parcelles sélectionnées
       const selectedPlotsArray = plotsToSync.filter((p: any) =>
         selectedPlots.has(p.id)
       );
@@ -258,20 +241,16 @@ export default function DataSync() {
 
           return {
             result,
-            farmer,
             farmerId: farmer.id,
             plotIds: fp.map((plot: any) => plot.id),
-            plots: fp,
             success: true,
           };
         } catch (error) {
           console.error('Farmer sync error:', error);
           return {
             result: null,
-            farmer,
             farmerId: farmer.id,
             plotIds: fp.map((plot: any) => plot.id),
-            plots: fp,
             success: false,
             error: error,
           };
@@ -280,7 +259,7 @@ export default function DataSync() {
 
       const farmerPromiseResults = await Promise.all(farmerPromises);
 
-      for (const { result, farmer, farmerId, plotIds, plots, success, error } of farmerPromiseResults) {
+      for (const { result, farmerId, plotIds, success, error } of farmerPromiseResults) {
         if (success && result?.data?.status === 'OK') {
           await realm.realmUpdate(FarmerSchema, farmerId, 'synced', true);
           for (const plotId of plotIds) {
@@ -292,7 +271,6 @@ export default function DataSync() {
           failedFarmersCount++;
           failedPlotsCount += plotIds.length;
           errors.push(`Farmer ${farmerId}: ${error?.message || 'Unknown error'}`);
-          failedFarmersData.push({ ...farmer, plots });
         }
       }
 
@@ -337,7 +315,6 @@ export default function DataSync() {
 
           return {
             result,
-            plot,
             plotId: plot.id,
             success: true,
           };
@@ -345,7 +322,6 @@ export default function DataSync() {
           console.error('Plot sync error:', error);
           return {
             result: null,
-            plot,
             plotId: plot.id,
             success: false,
             error: error,
@@ -355,25 +331,18 @@ export default function DataSync() {
 
       const plotPromiseResults = await Promise.all(plotPromises);
 
-      for (const { result, plot, plotId, success, error } of plotPromiseResults) {
+      for (const { result, plotId, success, error } of plotPromiseResults) {
         if (success && result?.data?.status === 'OK') {
           await realm.realmDeleteOne(PlotSchema, `id == '${plotId}'`);
           syncedPlotsCount++;
         } else {
           failedPlotsCount++;
           errors.push(`Plot ${plotId}: ${error?.message || 'Unknown error'}`);
-          failedPlotsData.push(plot);
         }
       }
 
-      // Sauvegarder les éléments qui ont échoué
-      setFailedItems({
-        farmers: failedFarmersData,
-        plots: failedPlotsData,
-      });
-
-      // Afficher le résultat approprié
       await getItemsToSync();
+
       if (failedFarmersCount === 0 && failedPlotsCount === 0) {
         Alert.alert(
           i18n.t('synced.syncedTitle'),
@@ -403,7 +372,6 @@ export default function DataSync() {
   };
 
   const exportToExcel = async () => {
-    // Vérifier qu'il y a des données à exporter
     const hasDataToExport = selectedPlots.size > 0 || farmersToSync.length > 0;
 
     if (!hasDataToExport) {
@@ -417,21 +385,16 @@ export default function DataSync() {
     setExporting(true);
 
     try {
-      // Filtrer les parcelles sélectionnées ou toutes si aucune sélection
       const plotsToExport = selectedPlots.size > 0
         ? plotsToSync.filter((p: any) => selectedPlots.has(p.id))
         : plotsToSync;
 
-      // Préparer les données pour l'export
       const excelData: any[] = [];
 
-      // Ajouter les agriculteurs et leurs parcelles
       for (const farmer of farmersToSync) {
-        // Trouver les parcelles de cet agriculteur dans la sélection
         const farmerPlots = plotsToExport.filter(
           (plot: any) => plot.farmerId === farmer.id
         );
-
 
         const baseRow = {
           'Farmer Name': farmer.data.name || '',
@@ -464,7 +427,6 @@ export default function DataSync() {
             });
           }
         } else {
-          // Ajouter l'agriculteur sans parcelle si pas de parcelles associées dans la sélection
           excelData.push({
             ...baseRow,
             'Plot Name': '',
@@ -480,13 +442,11 @@ export default function DataSync() {
         }
       }
 
-      // Ajouter les parcelles orphelines (dont l'agriculteur est déjà synchronisé)
       const orphanPlots = plotsToExport.filter(
         (plot: any) => !farmersToSync.find((f: any) => f.id === plot.farmerId)
       );
 
       for (const plot of orphanPlots) {
-
         const farmer = farmersSynced.find(
           (f: any) => f.id === plot.farmerId
         );
@@ -516,42 +476,23 @@ export default function DataSync() {
         });
       }
 
-      // Créer le workbook et la feuille
       const wb = XLSX.utils.book_new();
       const ws = XLSX.utils.json_to_sheet(excelData);
 
-      // Définir la largeur des colonnes
       const columnWidths = [
-        { wch: 15 }, // Farmer Name
-        { wch: 15 }, // Farmer Surname
-        { wch: 10 }, // Gender
-        { wch: 12 }, // Date of Birth
-        { wch: 20 }, // Village
-        { wch: 15 }, // Cell
-        { wch: 15 }, // Phone
-        { wch: 25 }, // Email
-        { wch: 20 }, // Farm Name
-        { wch: 10 }, // Area Unit
-        { wch: 12 }, // Total Area
-        { wch: 15 }, // Organic Production
-        { wch: 20 }, // Plot Name
-        { wch: 10 }, // Crop
-        { wch: 10 }, // Plot Size
-        { wch: 10 }, // Plot Unit
-        { wch: 15 }, // Number of Plants
-        { wch: 12 }, // Latitude
-        { wch: 12 }, // Longitude
-        { wch: 15 }, // Organic Start
-        { wch: 15 }, // Certification
+        { wch: 15 }, { wch: 15 }, { wch: 10 }, { wch: 12 },
+        { wch: 20 }, { wch: 15 }, { wch: 15 }, { wch: 25 },
+        { wch: 20 }, { wch: 10 }, { wch: 12 }, { wch: 15 },
+        { wch: 20 }, { wch: 10 }, { wch: 10 }, { wch: 10 },
+        { wch: 15 }, { wch: 12 }, { wch: 12 }, { wch: 15 },
+        { wch: 15 },
       ];
       ws['!cols'] = columnWidths;
 
       XLSX.utils.book_append_sheet(wb, ws, 'Farmers and Plots');
 
-      // Générer le fichier
       const wbout = XLSX.write(wb, { type: 'base64', bookType: 'xlsx' });
 
-      // Sauvegarder le fichier
       const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
       const fileName = `farmers_plots_export_${timestamp}.xlsx`;
       const fileUri = `${FileSystem.documentDirectory}${fileName}`;
@@ -560,7 +501,6 @@ export default function DataSync() {
         encoding: FileSystem.EncodingType.Base64,
       });
 
-      // Partager le fichier
       const canShare = await Sharing.isAvailableAsync();
       if (canShare) {
         await Sharing.shareAsync(fileUri, {

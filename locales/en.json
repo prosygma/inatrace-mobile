@@ -258,15 +258,13 @@
     "errorMessage": "Sync error",
     "selectAll": "Select all",
     "deselectAll": "Deselect all",
-    "exportFailed": "Export failed",
-    "exportTitle": "Failed sync data",
+    "exportToExcel": "Export to Excel",
+    "exportTitle": "Export agriculteurs and plots",
     "exportSuccess": "Export successful",
     "exportSuccessMessage": "The Excel file has been created successfully",
     "exportError": "Export error",
     "exportErrorMessage": "Error during export",
-    "noFailedItems": "No failed items to export",
-    "sharingNotAvailable": "File sharing is not available on this device",
-    "exportToExcel": "Export to Excel",
-    "noDataToExport": "No data to export"
+    "noDataToExport": "No data to export",
+    "sharingNotAvailable": "Sharing is not available on this device"
   }
 }

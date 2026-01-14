@@ -788,33 +788,31 @@ export default function DataSync() {
           </BottomSheetModal>
 
           <View className="pb-5 bg-White">
-            {hasDataToSync && (
-              <Pressable
-                className="mb-2"
-                onPress={exportToExcel}
-                disabled={exporting}
-              >
-                {({ pressed }) => (
-                  <View
-                    className={cn(
-                      pressed || exporting ? 'bg-LightGray' : 'bg-Gray',
-                      'flex flex-row mx-5 p-3 items-center justify-center rounded-md h-[48px]'
-                    )}
-                  >
-                    {exporting ? (
-                      <ActivityIndicator color="#000" />
-                    ) : (
-                      <Download className="text-White" />
-                    )}
-                    <View className="w-2" />
-                    <Text className="text-[16px] text-White font-semibold">
-                      {i18n.t('synced.exportToExcel')}
-                      {selectedPlots.size > 0 && ` (${selectedPlots.size})`}
-                    </Text>
-                  </View>
-                )}
-              </Pressable>
-            )}
+            <Pressable
+              className="mb-2"
+              onPress={exportToExcel}
+              disabled={exporting || !hasDataToSync}
+            >
+              {({ pressed }) => (
+                <View
+                  className={cn(
+                    pressed || exporting || !hasDataToSync ? 'bg-LightGray' : 'bg-Gray',
+                    'flex flex-row mx-5 p-3 items-center justify-center rounded-md h-[48px]'
+                  )}
+                >
+                  {exporting ? (
+                    <ActivityIndicator color="#000" />
+                  ) : (
+                    <Download className="text-White" />
+                  )}
+                  <View className="w-2" />
+                  <Text className="text-[16px] text-White font-semibold">
+                    {i18n.t('synced.exportToExcel')}
+                    {selectedPlots.size > 0 && ` (${selectedPlots.size})`}
+                  </Text>
+                </View>
+              )}
+            </Pressable>
 
             <Pressable
               onPress={syncData}

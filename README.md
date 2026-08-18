@@ -18,7 +18,7 @@ To run the INATrace app locally, follow these steps:
 1. **Clone the Repository**:
 
    ```bash
-   git clone https://github.com/INATrace/mobile.git
+   git clone https://github.com/agstack/inatrace-mobile.git
    ```
 
 2. **Install Dependencies**: Ensure you have [Node.js](https://nodejs.org/) installed, then install the project dependencies.

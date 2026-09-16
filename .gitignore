@@ -93,3 +93,7 @@ yarn-error.*
 
 expo-env.d.ts
 # @end expo-cli
+
+# editor backups
+*.bak
+*.orig

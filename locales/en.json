@@ -89,7 +89,8 @@
         "lastName": "Last name",
         "gender": "Gender",
         "userId": "User ID",
-        "companyInternalFarmerId": "Company internal farmer ID"
+        "companyInternalFarmerId": "Company internal farmer ID",
+        "validationStatus": "Status"
       },
       "address": {
         "title": "Address",
@@ -149,6 +150,11 @@
       "error": "Error",
       "errorMessage": "There was an error creating the farmer",
       "errorEditMessage": "There was an error editing the farmer"
+    },
+    "status": {
+      "PENDING": "Pending validation",
+      "VALIDATED": "Validated",
+      "REJECTED": "Not validated"
     }
   },
   "plots": {

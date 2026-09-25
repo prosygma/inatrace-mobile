@@ -4,6 +4,8 @@ import cn from '@/utils/cn';
 import { Link } from 'expo-router';
 import { Plus } from 'lucide-react-native';
 import { Pressable, View, Text } from 'react-native';
+import React from 'react';
+import { User } from '@/types/user';
 // import { AuthContext } from '@/context/AuthContext';
 
 export default function NewFarmerButton() {
@@ -41,8 +43,19 @@ export default function NewFarmerButton() {
   );
 }
 
-export const ButtonWrapper = ({ children, user }: any) => {
-  if (!user || user?.role === 'USER') {
+// Any signed-in user may add farmers from the field (register #3). Farmers added by collectors
+// reach the server as PENDING and wait for a company admin to validate them, so the button is no
+// longer limited to admins. Guest (demo) sessions do not get it.
+export const ButtonWrapper = ({
+  children,
+  user,
+  guestAccess,
+}: {
+  children: React.ReactNode;
+  user: User | null;
+  guestAccess?: boolean;
+}) => {
+  if (!user || guestAccess) {
     return null;
   }
 

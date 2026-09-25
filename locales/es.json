@@ -89,7 +89,8 @@
         "lastName": "Apellido",
         "gender": "Género",
         "userId": "ID de usuario",
-        "companyInternalFarmerId": "ID interno de agricultor de la empresa"
+        "companyInternalFarmerId": "ID interno de agricultor de la empresa",
+        "validationStatus": "Estado"
       },
       "address": {
         "title": "Dirección",
@@ -149,6 +150,11 @@
       "error": "Error",
       "errorMessage": "Hubo un error al crear el agricultor",
       "errorEditMessage": "Hubo un error al editar el agricultor"
+    },
+    "status": {
+      "PENDING": "Pendiente de validación",
+      "VALIDATED": "Validado",
+      "REJECTED": "No validado"
     }
   },
   "plots": {

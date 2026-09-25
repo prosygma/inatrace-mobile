@@ -47,6 +47,8 @@ export type CardProps = {
     data: Farmer;
   };
   synced?: boolean;
+  // Supervisor review state of a farmer; a badge is shown unless validated
+  validationStatus?: 'PENDING' | 'VALIDATED' | 'REJECTED';
   canClose?: boolean;
   limitScreen?: boolean;
   onClose?: () => void;
@@ -76,6 +78,7 @@ export default function Card({
   navigationPath,
   navigationParams,
   synced,
+  validationStatus,
   canClose,
   onClose,
   switchView,
@@ -102,6 +105,24 @@ export default function Card({
           <AlertCircle className="mr-1 text-purple-300" size={14} />
           <Text className="text-purple-300">
             {i18n.t('synced.itemNotSynced')}
+          </Text>
+        </View>
+      )}
+      {(validationStatus === 'PENDING' || validationStatus === 'REJECTED') && (
+        <View className="flex flex-row items-center justify-start mb-1">
+          <AlertCircle
+            className={cn(
+              'mr-1',
+              validationStatus === 'PENDING' ? 'text-amber-500' : 'text-red-500'
+            )}
+            size={14}
+          />
+          <Text
+            className={
+              validationStatus === 'PENDING' ? 'text-amber-500' : 'text-red-500'
+            }
+          >
+            {i18n.t(`farmers.status.${validationStatus}`)}
           </Text>
         </View>
       )}

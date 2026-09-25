@@ -110,7 +110,8 @@
         "lastName": "Izina ry'umuryango",
         "gender": "Igitsina",
         "userId": "ID y'umukoresha",
-        "companyInternalFarmerId": "ID y'umuhinzi mu ikompanyi"
+        "companyInternalFarmerId": "ID y'umuhinzi mu ikompanyi",
+        "validationStatus": "Imiterere"
       },
       "address": {
         "title": "Aho atuye",
@@ -170,6 +171,11 @@
       "error": "Ikosa",
       "errorMessage": "Habaye ikibazo mu kurema umuhinzi",
       "errorEditMessage": "Habaye ikosa mu kuhindura umuhinzi"
+    },
+    "status": {
+      "PENDING": "Bitegereje kwemezwa",
+      "VALIDATED": "Byemejwe",
+      "REJECTED": "Ntibyemejwe"
     }
   },
   "plots": {

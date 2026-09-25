@@ -130,7 +130,8 @@ export default function Farmers() {
       if (response.data.status === 'OK') {
         const farmers = response.data.data.items.map((farmer: Farmer) => {
           return {
-            title: `${farmer.name ?? ''} ${farmer.surname ?? ''}`,
+            title: `${farmer.surname ?? ''} ${farmer.name ?? ''}`.trim(),
+            validationStatus: farmer.validationStatus,
             items: [
               {
                 type: 'view',
@@ -170,8 +171,9 @@ export default function Farmers() {
         const offlineData = farmersRealmData.map(
           (farmer: { data: Farmer; synced: boolean }) => {
             return {
-              title: `${farmer.data.name ?? ''} ${farmer.data.surname ?? ''}`,
+              title: `${farmer.data.surname ?? ''} ${farmer.data.name ?? ''}`.trim(),
               synced: farmer.synced,
+              validationStatus: farmer.data.validationStatus,
               items: [
                 {
                   type: 'view',
@@ -242,8 +244,9 @@ export default function Farmers() {
       const offlineData = farmersRealmData.map(
         (farmer: { data: Farmer; synced: boolean }) => {
           return {
-            title: `${farmer.data.name ?? ''} ${farmer.data.surname ?? ''}`,
+            title: `${farmer.data.surname ?? ''} ${farmer.data.name ?? ''}`.trim(),
             synced: farmer.synced,
+            validationStatus: farmer.data.validationStatus,
             items: [
               {
                 type: 'view',
@@ -351,7 +354,7 @@ export default function Farmers() {
         />
       </View>
       {type === 'farmers' && (
-        <ButtonWrapper>
+        <ButtonWrapper user={user} guestAccess={guestAccess}>
           <NewFarmerButton />
         </ButtonWrapper>
       )}

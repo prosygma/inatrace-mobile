@@ -32,6 +32,8 @@ export interface Farmer {
     };
   };
   gender: string;
+  // Supervisor review state (register #3); absent on farmers created before the feature = validated
+  validationStatus?: 'PENDING' | 'VALIDATED' | 'REJECTED';
   bank: {
     accountHolderName: string;
     accountNumber: string;

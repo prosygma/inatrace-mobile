@@ -89,7 +89,8 @@
         "lastName": "Nachname",
         "gender": "Geschlecht",
         "userId": "Benutzer-ID",
-        "companyInternalFarmerId": "Interne Bauern-ID der Firma"
+        "companyInternalFarmerId": "Interne Bauern-ID der Firma",
+        "validationStatus": "Status"
       },
       "address": {
         "title": "Adresse",
@@ -149,6 +150,11 @@
       "error": "Fehler",
       "errorMessage": "Beim Erstellen des Bauern ist ein Fehler aufgetreten",
       "errorEditMessage": "Beim Bearbeiten des Bauern ist ein Fehler aufgetreten"
+    },
+    "status": {
+      "PENDING": "Validierung ausstehend",
+      "VALIDATED": "Validiert",
+      "REJECTED": "Nicht validiert"
     }
   },
   "plots": {

@@ -71,6 +71,18 @@ export default function FarmerInformation({
             ),
             value: selectedFarmer?.farmerCompanyInternalId ?? '',
           },
+          // Unsynced farmers have no status yet: the server assigns it on upload
+          ...(selectedFarmer?.validationStatus
+            ? [
+                {
+                  type: 'view' as const,
+                  name: i18n.t('farmers.info.basicInformation.validationStatus'),
+                  value: i18n.t(
+                    `farmers.status.${selectedFarmer.validationStatus}`
+                  ),
+                },
+              ]
+            : []),
         ]}
       />
       <Text className="text-[18px] font-medium mt-5 mx-5">

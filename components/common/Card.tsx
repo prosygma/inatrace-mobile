@@ -111,10 +111,8 @@ export default function Card({
       {(validationStatus === 'PENDING' || validationStatus === 'REJECTED') && (
         <View className="flex flex-row items-center justify-start mb-1">
           <AlertCircle
-            className={cn(
-              'mr-1',
-              validationStatus === 'PENDING' ? 'text-amber-500' : 'text-red-500'
-            )}
+            color={validationStatus === 'PENDING' ? '#f59e0b' : Colors.red}
+            style={{ marginRight: 4 }}
             size={14}
           />
           <Text

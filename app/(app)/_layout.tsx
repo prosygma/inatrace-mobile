@@ -112,7 +112,7 @@ export default function AppLayout() {
 
 const LeftHeader = () => (
   <Pressable className="flex flex-row items-center justify-center mr-3">
-    <ChevronLeft className="text-Orange" />
+    <ChevronLeft color={Colors.orange} />
     <Text className="font-medium text-Orange text-[18px]">Retour</Text>
   </Pressable>
 );

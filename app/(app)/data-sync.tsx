@@ -804,7 +804,7 @@ export default function DataSync() {
                   {exporting ? (
                     <ActivityIndicator color="#000" />
                   ) : (
-                    <Download className="text-White" />
+                    <Download color={Colors.white} />
                   )}
                   <View className="w-2" />
                   <Text className="text-[16px] text-White font-semibold">
@@ -836,7 +836,7 @@ export default function DataSync() {
                   {syncing ? (
                     <ActivityIndicator />
                   ) : (
-                    <RefreshCw className="text-White" />
+                    <RefreshCw color={Colors.white} />
                   )}
                   <View className="w-2" />
                   <Text className="text-[16px] text-White font-semibold">

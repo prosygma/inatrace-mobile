@@ -132,7 +132,8 @@
       },
       "productTypes": {
         "title": "Tipos de productos",
-        "productType": "Tipo de producto"
+        "productType": "Tipo de producto",
+        "required": "Añada al menos un tipo de producto"
       }
     },
     "newFarmerCreation": {

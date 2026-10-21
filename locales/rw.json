@@ -131,7 +131,8 @@
       },
       "productTypes": {
         "title": "Ubwoko bw'Ibicuruzwa",
-        "productType": "Ubwoko bw'Ibicuruzwa"
+        "productType": "Ubwoko bw'Ibicuruzwa",
+        "required": "Ongeraho nibura ubwoko bumwe bw’igicuruzwa"
       }
     },
     "newFarmerCreation": {

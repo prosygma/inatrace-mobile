@@ -5,7 +5,7 @@ export default ({ config }) => ({
     ...config.expo,
     name: 'INATrace',
     slug: 'inatrace-mobile',
-    version: '1.10.0',
+    version: '1.11.0',
     orientation: 'portrait',
     icon: './assets/images/icon.png',
     scheme: 'myapp',
@@ -39,7 +39,7 @@ export default ({ config }) => ({
       },
       package: 'com.sunesis.inatrace',
       // Earlier sideloaded APKs were all versionCode 1; bump on every APK handed to collectors
-      versionCode: 2,
+      versionCode: 3,
       permissions: [
         'ACCESS_COARSE_LOCATION',
         'ACCESS_FINE_LOCATION',

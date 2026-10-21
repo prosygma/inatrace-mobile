@@ -132,7 +132,8 @@
       },
       "productTypes": {
         "title": "Product types",
-        "productType": "Product type"
+        "productType": "Product type",
+        "required": "Add at least one product type"
       }
     },
     "newFarmerCreation": {

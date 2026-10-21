@@ -36,6 +36,7 @@ type NewFarmerErrors = {
   country: boolean;
   areaUnit: boolean;
   totalCultivatedArea: boolean;
+  productTypes: boolean;
   hondurasFarm?: boolean;
   hondurasVillage?: boolean;
   hondurasMunicipality?: boolean;
@@ -245,6 +246,17 @@ export default function EditGuestFarmer() {
     );
   };
 
+  useEffect(() => {
+
+    if ((farmer.farm?.farmPlantInformationList?.length ?? 0) > 0) {
+
+      setErrors((currentErrors) => ({ ...currentErrors, productTypes: false }));
+
+    }
+
+  }, [farmer.farm?.farmPlantInformationList]);
+
+
   const validateFields = () => {
     const errors: NewFarmerErrors = {
       lastName: !farmer.surname,
@@ -252,6 +264,7 @@ export default function EditGuestFarmer() {
       country: !farmer.location?.address?.country,
       areaUnit: !farmer.farm?.areaUnit,
       totalCultivatedArea: !farmer.farm?.totalCultivatedArea,
+      productTypes: (farmer.farm?.farmPlantInformationList?.length ?? 0) === 0,
       hondurasFarm:
         farmer?.location?.address?.country?.code === 'HN' &&
         !farmer.location?.address?.hondurasFarm,
@@ -701,9 +714,18 @@ export default function EditGuestFarmer() {
             },
           ]}
         />
-        <Text className="text-[18px] font-medium mt-5 mx-5">
-          {i18n.t('farmers.info.productTypes.title')}
+        <Text
+          className={`text-[18px] font-medium mt-5 mx-5 ${
+            errors.productTypes ? 'text-red-500' : ''
+          }`}
+        >
+          {i18n.t('farmers.info.productTypes.title') + '*'}
         </Text>
+        {errors.productTypes && (
+          <Text className="text-red-500 mx-5 mt-1">
+            {i18n.t('farmers.info.productTypes.required')}
+          </Text>
+        )}
         <View className="flex items-center w-full">
           <View className="flex flex-row flex-wrap justify-start px-5 mt-2 mb-4 w-full">
             {farmer?.farm?.farmPlantInformationList?.map((item, index) => (

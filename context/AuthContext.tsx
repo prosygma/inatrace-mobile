@@ -149,20 +149,6 @@ export function SessionProvider(props: React.PropsWithChildren<any>) {
     password: string
   ): Promise<LogInResponse> => {
     try {
-      // const responseLogin = await axios.post(
-      //   'https://test1front.inatrace.cm/api/user/login',
-      //   {
-      //     username: 'admin@inatrace.com',
-      //     password: '***REMOVED***',
-      //   },
-      //   {
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //     },
-      //     timeout: 10000, // Définir un timeout raisonnable (10 secondes)
-      //   }
-      // );
-
       const responseLogin = await axios.post(`${instance}/api/user/login`, {
         username,
         password,

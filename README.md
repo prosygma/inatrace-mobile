@@ -5,6 +5,16 @@ INATrace is a digital open-source solution designed to enhance the economic cond
 [Learn more on Google Play](https://play.google.com/store/apps/details?hl=en-US&id=com.sunesis.inatrace)  
 [Learn more on App Store](https://apps.apple.com/us/app/inatrace/id6572305162)
 
+Project is composed of 4 parts, coordinated from the [INATrace project hub](https://github.com/agstack/inatrace) (project-wide documentation and governance):
+
+* [Frontend application](https://github.com/agstack/inatrace-frontend)
+* [Mobile app](https://github.com/agstack/inatrace-mobile)
+* [Java backend](https://github.com/agstack/inatrace-backend)
+* [Coffee network](https://github.com/agstack/inatrace-coffee-network)
+
+## Technical Documentation
+For detailed technical documentation, please refer to [TECHNICAL_DOCUMENTATION.md](https://github.com/agstack/inatrace-backend/blob/main/TECHNICAL_DOCUMENTATION.md).
+
 ## Key Features
 
 - **Polygon Mapping & Farmer Profiles**: Create detailed profiles for farmers and map field boundaries using GPS data, ensuring accurate records of cooperative members.
@@ -84,6 +94,23 @@ For detailed instructions and troubleshooting, refer to the [official EAS Build 
 
 - **Documentation**: Comprehensive guides and tutorials are available on the [INATrace Documentation Site](https://inatrace-docs.vercel.app/).
 
-- **Support**: For assistance, please contact our support team at support@inatrace.org.
+- **Questions and discussion**: [INATrace mailing list](https://lists.agstack.org/g/inatrace).
 
 By following these instructions, you can effectively run and build the INATrace app locally, contributing to a more transparent and equitable global supply chain.
+
+## License
+
+Copyright (c) 2023 Antje ECG d.o.o., GIZ - Deutsche Gesellschaft für Internationale Zusammenarbeit GmbH, Sunesis ltd.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.

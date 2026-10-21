@@ -26,6 +26,7 @@ import { useState, useContext } from 'react';
 import { router } from 'expo-router';
 
 import cn from '@/utils/cn';
+import Colors from '@/constants/Colors';
 
 export default function Login() {
   const [username, setUsername] = useState<string>('');
@@ -161,12 +162,12 @@ export default function Login() {
             }}
           >
             <View>
-              <View className="flex flex-row items-center justify-between mb-2">
+              <View className="flex flex-row justify-between items-center mb-2">
                 <Text className="text-[18px] font-medium">
                   {i18n.t('userSettings.language')}
                 </Text>
                 <Pressable onPress={() => setAskLanguage(false)} className="">
-                  <X size={20} className="text-black" />
+                  <X size={20} color={Colors.black} />
                 </Pressable>
               </View>
 
@@ -196,7 +197,7 @@ export default function Login() {
             }}
           >
             <View>
-              <View className="flex flex-row items-center justify-between mb-2">
+              <View className="flex flex-row justify-between items-center mb-2">
                 <Text className="text-[18px] font-medium">
                   {i18n.t('changeInstance')}
                 </Text>
@@ -204,7 +205,7 @@ export default function Login() {
                   onPress={() => setInstanceChange(false)}
                   className=""
                 >
-                  <X size={20} className="text-black" />
+                  <X size={20} color={Colors.black} />
                 </Pressable>
               </View>
 
@@ -261,7 +262,7 @@ export default function Login() {
             behavior="position"
             keyboardVerticalOffset={300}
           >
-            <View className="flex flex-row items-center justify-between">
+            <View className="flex flex-row justify-between items-center">
               <View>
                 <Text className="text-[24px] font-semibold">
                   {i18n.t('login.welcomeBack')}
@@ -271,7 +272,7 @@ export default function Login() {
                 </Text>
               </View>
               <Pressable onPress={() => setAskLanguage(true)}>
-                <Globe size={20} className="text-black" />
+                <Globe size={20} color="#000000" />
               </Pressable>
             </View>
 
@@ -311,7 +312,7 @@ export default function Login() {
                 <Text className="text-red-500">{loginError}</Text>
               </View>
             )}
-            <View className="flex flex-row items-center justify-between">
+            <View className="flex flex-row justify-between items-center">
               <Pressable
                 onPress={() => clickPrivacyPolicy()}
                 className="self-end"

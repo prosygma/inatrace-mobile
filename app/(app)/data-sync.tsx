@@ -34,6 +34,7 @@ import {
 import { FullWindowOverlay } from 'react-native-screens';
 import Selector from '@/components/common/Selector';
 import { User } from '@/types/user';
+import Colors from '@/constants/Colors';
 
 export default function DataSync() {
   const navigation = useNavigation();
@@ -78,9 +79,9 @@ export default function DataSync() {
       headerLeft: () => (
         <Pressable
           onPress={() => navigation.goBack()}
-          className="flex flex-row items-center justify-center mr-3"
+          className="flex flex-row justify-center items-center mr-3"
         >
-          <ChevronLeft className="text-Orange" />
+          <ChevronLeft color={Colors.orange} />
           <Text className="font-medium text-Orange text-[18px]">Back</Text>
         </Pressable>
       ),
@@ -575,18 +576,18 @@ export default function DataSync() {
         </View>
       ) : (
         <View className="h-full">
-          <ScrollView className="flex flex-col h-full pt-5 bg-White">
+          <ScrollView className="flex flex-col pt-5 h-full bg-White">
             <Text className="text-[18px] font-medium mx-5">
               {i18n.t('farmers.title')}
             </Text>
             {loading ? (
-              <View className="flex flex-row items-center justify-center p-5 py-10">
+              <View className="flex flex-row justify-center items-center p-5 py-10">
                 <Text className="text-[16px] font-medium">
                   {i18n.t('loading')}
                 </Text>
               </View>
             ) : farmersToSync.length > 0 ? (
-              <View className="flex flex-col mx-5 mt-5 border rounded-md border-LightGray bg-White">
+              <View className="flex flex-col mx-5 mt-5 rounded-md border border-LightGray bg-White">
                 {farmersToSync.map((f: any, index: number) => (
                   <View
                     className={cn(
@@ -595,7 +596,7 @@ export default function DataSync() {
                     )}
                     key={index}
                   >
-                    <View className="flex flex-row items-center justify-between py-4 pr-4 ml-4">
+                    <View className="flex flex-row justify-between items-center py-4 pr-4 ml-4">
                       <View className="max-w-[45%]">
                         <Text className="font-bold">
                           {i18n.t('synced.name')}
@@ -630,7 +631,7 @@ export default function DataSync() {
                 ))}
               </View>
             ) : (
-              <View className="flex flex-row items-center justify-center p-5 py-10">
+              <View className="flex flex-row justify-center items-center p-5 py-10">
                 <Text className="text-[16px] font-medium">
                   {i18n.t('synced.noFarmers')}
                 </Text>
@@ -653,7 +654,7 @@ export default function DataSync() {
             </View>
 
             {loading ? (
-              <View className="flex flex-row items-center justify-center p-5 py-10">
+              <View className="flex flex-row justify-center items-center p-5 py-10">
                 <Text className="text-[16px] font-medium">
                   {i18n.t('loading')}
                 </Text>
@@ -733,7 +734,7 @@ export default function DataSync() {
                           </Text>
                         </View>
                         <Pressable onPress={() => handleEditPlot(p)}>
-                          <Pencil className="text-Orange" size={18} />
+                          <Pencil size={18} color={Colors.orange} />
                         </Pressable>
                       </View>
                     </Pressable>
@@ -741,7 +742,7 @@ export default function DataSync() {
                 })}
               </View>
             ) : (
-              <View className="flex flex-row items-center justify-center p-5 py-10">
+              <View className="flex flex-row justify-center items-center p-5 py-10">
                 <Text className="text-[16px] font-medium">
                   {i18n.t('synced.noPlots')}
                 </Text>
@@ -803,7 +804,7 @@ export default function DataSync() {
                   {exporting ? (
                     <ActivityIndicator color="#000" />
                   ) : (
-                    <Download className="text-White" />
+                    <Download color={Colors.white} />
                   )}
                   <View className="w-2" />
                   <Text className="text-[16px] text-White font-semibold">
@@ -835,7 +836,7 @@ export default function DataSync() {
                   {syncing ? (
                     <ActivityIndicator />
                   ) : (
-                    <RefreshCw className="text-White" />
+                    <RefreshCw color={Colors.white} />
                   )}
                   <View className="w-2" />
                   <Text className="text-[16px] text-White font-semibold">

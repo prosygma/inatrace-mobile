@@ -154,7 +154,7 @@ export default function FarmerInformation({
                 : [
                     {
                       type: 'view',
-                      name: i18n.t('farmers.info.address.address') + '*',
+                      name: i18n.t('farmers.info.address.address'),
                       value: selectedFarmer?.location?.address?.address ?? '',
                     },
                     {
@@ -169,7 +169,7 @@ export default function FarmerInformation({
                     },
                     {
                       type: 'view',
-                      name: i18n.t('farmers.info.address.zip') + '*',
+                      name: i18n.t('farmers.info.address.zip'),
                       value: selectedFarmer?.location?.address?.zip ?? '',
                     },
                   ]) as ItemProps[]),

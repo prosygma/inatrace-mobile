@@ -34,8 +34,6 @@ type NewFarmerErrors = {
   lastName: boolean;
   gender: boolean;
   country: boolean;
-  areaUnit: boolean;
-  totalCultivatedArea: boolean;
   productTypes: boolean;
   hondurasFarm?: boolean;
   hondurasVillage?: boolean;
@@ -44,10 +42,8 @@ type NewFarmerErrors = {
   village?: boolean;
   cell?: boolean;
   sector?: boolean;
-  address?: boolean;
   city?: boolean;
   state?: boolean;
-  zip?: boolean;
   otherAddress?: boolean;
 };
 
@@ -203,13 +199,6 @@ export default function EditGuestFarmer() {
       ) {
         updatedErrors.sector = false;
       } else if (
-        key === 'address' &&
-        farmer.location?.address?.country?.code !== 'HN' &&
-        farmer.location?.address?.country?.code !== 'RW' &&
-        customAddress !== 'Yes'
-      ) {
-        updatedErrors.address = false;
-      } else if (
         key === 'city' &&
         farmer.location?.address?.country?.code !== 'HN' &&
         farmer.location?.address?.country?.code !== 'RW' &&
@@ -223,13 +212,6 @@ export default function EditGuestFarmer() {
         customAddress !== 'Yes'
       ) {
         updatedErrors.state = false;
-      } else if (
-        key === 'zip' &&
-        farmer.location?.address?.country?.code !== 'HN' &&
-        farmer.location?.address?.country?.code !== 'RW' &&
-        customAddress !== 'Yes'
-      ) {
-        updatedErrors.zip = false;
       } else if (key === 'otherAddress' && customAddress === 'Yes') {
         updatedErrors.otherAddress = false;
       }
@@ -262,8 +244,6 @@ export default function EditGuestFarmer() {
       lastName: !farmer.surname,
       gender: !farmer.gender,
       country: !farmer.location?.address?.country,
-      areaUnit: !farmer.farm?.areaUnit,
-      totalCultivatedArea: !farmer.farm?.totalCultivatedArea,
       productTypes: (farmer.farm?.farmPlantInformationList?.length ?? 0) === 0,
       hondurasFarm:
         farmer?.location?.address?.country?.code === 'HN' &&
@@ -286,11 +266,6 @@ export default function EditGuestFarmer() {
       sector:
         farmer?.location?.address?.country?.code === 'RW' &&
         !farmer.location?.address?.sector,
-      address:
-        farmer?.location?.address?.country?.code !== 'HN' &&
-        farmer?.location?.address?.country?.code !== 'RW' &&
-        customAddress !== 'Yes' &&
-        !farmer.location?.address?.address,
       city:
         farmer?.location?.address?.country?.code !== 'HN' &&
         farmer?.location?.address?.country?.code !== 'RW' &&
@@ -301,11 +276,6 @@ export default function EditGuestFarmer() {
         farmer?.location?.address?.country?.code !== 'RW' &&
         customAddress !== 'Yes' &&
         !farmer.location?.address?.state,
-      zip:
-        farmer?.location?.address?.country?.code !== 'HN' &&
-        farmer?.location?.address?.country?.code !== 'RW' &&
-        customAddress !== 'Yes' &&
-        !farmer.location?.address?.zip,
       otherAddress:
         customAddress === 'Yes' && !farmer.location?.address?.otherAddress,
     };
@@ -354,7 +324,7 @@ export default function EditGuestFarmer() {
       },
       farm: {
         areaUnit: farmer.farm?.areaUnit ?? '',
-        totalCultivatedArea: farmer.farm?.totalCultivatedArea ?? 0,
+        totalCultivatedArea: farmer.farm?.totalCultivatedArea || null,
         farmPlantInformationList: farmer.farm?.farmPlantInformationList ?? [],
         organic: farmer.farm?.organic ?? false,
         areaOrganicCertified: farmer.farm?.areaOrganicCertified ?? 0,
@@ -417,10 +387,8 @@ export default function EditGuestFarmer() {
       setErrors((currentErrors) => {
         return {
           ...currentErrors,
-          address: false,
           city: false,
           state: false,
-          zip: false,
         };
       });
     } else {
@@ -644,7 +612,7 @@ export default function EditGuestFarmer() {
                   : [
                       {
                         type: 'type',
-                        name: i18n.t('farmers.info.address.address') + '*',
+                        name: i18n.t('farmers.info.address.address'),
                         placeholder: i18n.t('input.type'),
                         value: farmer?.location?.address?.address ?? '',
                         setValue: (value: string) =>
@@ -652,7 +620,6 @@ export default function EditGuestFarmer() {
                             ['location', 'address', 'address'],
                             value
                           ),
-                        error: errors.address,
                       },
                       {
                         type: 'type',
@@ -674,12 +641,11 @@ export default function EditGuestFarmer() {
                       },
                       {
                         type: 'type',
-                        name: i18n.t('farmers.info.address.zip') + '*',
+                        name: i18n.t('farmers.info.address.zip'),
                         placeholder: i18n.t('input.type'),
                         value: farmer?.location?.address?.zip ?? '',
                         setValue: (value: string) =>
                           updateState(['location', 'address', 'zip'], value),
-                        error: errors.zip,
                       },
                       {
                         type: 'checkbox',
@@ -844,25 +810,22 @@ export default function EditGuestFarmer() {
           items={[
             {
               type: 'type',
-              name: i18n.t('farmers.info.farmInformation.areaUnit') + '*',
+              name: i18n.t('farmers.info.farmInformation.areaUnit'),
               placeholder: i18n.t('input.type'),
               value: farmer?.farm?.areaUnit ?? '',
               setValue: (value: string) =>
                 updateState(['farm', 'areaUnit'], value),
-              error: errors.areaUnit,
             },
             {
               type: 'type',
               name:
                 i18n.t('farmers.info.farmInformation.totalFarmSize') +
-                ` (${farmer?.farm?.areaUnit ?? '/'})` +
-                '*',
+                ` (${farmer?.farm?.areaUnit ?? '/'})`,
               placeholder: i18n.t('input.type'),
               value: farmer?.farm?.totalCultivatedArea?.toString() ?? '',
               setValue: (value: string) =>
                 updateState(['farm', 'totalCultivatedArea'], value),
               isNumeric: true,
-              error: errors.totalCultivatedArea,
             },
             ...(farmer?.farm?.farmPlantInformationList
               ?.map((item, index) => [

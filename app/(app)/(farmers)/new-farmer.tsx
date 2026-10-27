@@ -84,14 +84,6 @@ export default function NewFarmer() {
       label: i18n.t('farmers.newFarmerCreation.gender.male'),
       value: 'MALE',
     },
-    {
-      label: i18n.t('farmers.newFarmerCreation.gender.diverse'),
-      value: 'DIVERSE',
-    },
-    {
-      label: i18n.t('farmers.newFarmerCreation.gender.n/a'),
-      value: 'N_A',
-    },
   ];
 
   const containerComponent = useCallback(

@@ -23,7 +23,7 @@ import { ChevronDown, Globe, Plus, X } from 'lucide-react-native';
 import i18n from '@/locales/i18n';
 import { Input, InputPassword } from '@/components/common/Input';
 import { useState, useContext, useEffect, useRef } from 'react';
-import { isCompatibleLoginProbe, isCompatibleOpenApi, isCompatiblePublicResponse, normalizeServerUrl } from '@/utils/servers';
+import { isCompatibleLoginProbe, isCompatibleOpenApi, isCompatiblePublicResponse, normalizeServerUrl, serverCandidates } from '@/utils/servers';
 
 import { AuthContext } from '@/context/AuthContext';
 import { router } from 'expo-router';
@@ -85,26 +85,42 @@ export default function Login() {
     validationId.current = id;
     setServerError('');
     setCheckingServer(true);
-    try {
-      const url = normalizeServerUrl(newInstance);
-      if (instances.some(value => {
-        try { return normalizeServerUrl(value, true, true) === url; } catch { return false; }
-      })) throw new Error('duplicate');
-      let valid = false;
+    const isKnown = (url: string) => instances.some(value => {
+      try { return normalizeServerUrl(value, true, true) === url; } catch { return false; }
+    });
+    const isCompatible = async (url: string) => {
       try {
         const response = await NativeModules.ServerTransport.discover(`${url}/v3/api-docs`, id);
-        valid = response.status === 200 && isCompatibleOpenApi(JSON.parse(response.body));
+        if (response.status === 200 && isCompatibleOpenApi(JSON.parse(response.body))) return true;
       } catch { /* Gateways may not expose OpenAPI. */ }
-      if (validationId.current !== id) return;
-      if (!valid) {
-        const response = await NativeModules.ServerTransport.discover(`${url}/api/public/globalSettings/MOBILE_SERVER_CHECK`, id);
+      if (validationId.current !== id) return false;
+      const response = await NativeModules.ServerTransport.discover(`${url}/api/public/globalSettings/MOBILE_SERVER_CHECK`, id);
+      if (validationId.current !== id) return false;
+      const loginProbe = await NativeModules.ServerTransport.discover(`${url}/api/user/login`, id);
+      return response.status === 200 && isCompatiblePublicResponse(JSON.parse(response.body)) &&
+        loginProbe.status === 405 && isCompatibleLoginProbe(JSON.parse(loginProbe.body));
+    };
+    try {
+      const candidates = serverCandidates(newInstance);
+      const isCompanyCode = candidates.length > 1;
+      let url = '';
+      for (const candidate of candidates) {
+        const normalized = normalizeServerUrl(candidate);
+        if (isKnown(normalized)) {
+          // A company code that points at a server already in the list just selects it.
+          if (!isCompanyCode) throw new Error('duplicate');
+          setNewInstance('');
+          setInstance(normalized);
+          setAddingServer(false);
+          setInstanceChange(false);
+          return;
+        }
+        let valid = false;
+        try { valid = await isCompatible(normalized); } catch (error) { if (!isCompanyCode) throw error; }
         if (validationId.current !== id) return;
-        const loginProbe = await NativeModules.ServerTransport.discover(`${url}/api/user/login`, id);
-        valid = response.status === 200 && isCompatiblePublicResponse(JSON.parse(response.body)) &&
-          loginProbe.status === 405 && isCompatibleLoginProbe(JSON.parse(loginProbe.body));
+        if (valid) { url = normalized; break; }
       }
-      if (validationId.current !== id) return;
-      if (!valid) throw new Error('incompatible');
+      if (!url) throw new Error('incompatible');
       const next = [...savedInstances, url];
       await AsyncStorage.setItem('saved_server_urls_v1', JSON.stringify(next));
       if (validationId.current !== id) return;
@@ -295,7 +311,7 @@ export default function Login() {
                 <View>
                   <Text className="mt-3">{i18n.t('server.address')}</Text>
                   <TextInput value={newInstance} onChangeText={setNewInstance}
-                    placeholder="https://example.org" autoCapitalize="none" autoCorrect={false}
+                    placeholder="ccq / https://example.org" autoCapitalize="none" autoCorrect={false}
                     keyboardType="url" placeholderTextColor="#666666"
                     style={{ color: Colors.black }}
                     className="p-2 mt-1 rounded-md border border-LightGray bg-White" />

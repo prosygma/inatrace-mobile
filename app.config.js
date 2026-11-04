@@ -38,6 +38,8 @@ export default ({ config }) => ({
         backgroundColor: '#ffffff',
       },
       package: 'com.sunesis.inatrace',
+      // Earlier sideloaded APKs were all versionCode 1; bump on every APK handed to collectors
+      versionCode: 2,
       permissions: [
         'ACCESS_COARSE_LOCATION',
         'ACCESS_FINE_LOCATION',

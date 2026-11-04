@@ -208,7 +208,7 @@ export default function Card({
 
 const ItemView = ({ item, isLast }: { item: ItemProps; isLast: boolean }) => {
   const [qrView, setQrView] = useState<boolean>(false);
-  const qrRef = useRef();
+  const qrRef = useRef<any>(null);
 
   const onShare = async (value: string) => {
     try {

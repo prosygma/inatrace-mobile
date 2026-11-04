@@ -29,3 +29,14 @@ export function isCompatibleLoginProbe(value: any): boolean {
   return value?.status === 'ERROR' &&
     value?.errorMessage === "Request method 'GET' is not supported";
 }
+
+// Cameroon tenants are reached by a short company code (e.g. "ccq"), which expands to the
+// domains we host on. A full address is returned unchanged so normalizeServerUrl can check it.
+const COMPANY_CODE = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;
+const COMPANY_CODE_DOMAINS = ['inatrace.cm', 'cm', 'com'];
+
+export function serverCandidates(value: string): string[] {
+  const input = value.trim().toLowerCase();
+  if (!COMPANY_CODE.test(input)) return [value];
+  return COMPANY_CODE_DOMAINS.map(domain => `https://${input}.${domain}`);
+}

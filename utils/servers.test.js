@@ -31,3 +31,16 @@ describe('server address validation', () => {
     expect(isCompatiblePublicResponse('<html>ok</html>')).toBe(false);
   });
 });
+
+describe('company code shortcut', () => {
+  const { serverCandidates } = require('./servers');
+
+  it('expands a company code to the hosted domains, most specific first', () => {
+    expect(serverCandidates(' CCQ ')).toEqual(['https://ccq.inatrace.cm', 'https://ccq.cm', 'https://ccq.com']);
+  });
+
+  it.each(['https://example.org', 'example.org', 'localhost:8080', '-bad', 'a b', ''])
+  ('leaves %s for the address validation', (value) => {
+    expect(serverCandidates(value)).toEqual([value]);
+  });
+});

@@ -4,7 +4,6 @@
   "ok": "OK",
   "loading": "Chargement...",
   "changeInstance": "Changer d'instance",
-  "nameInstance": "Code d'instance",
   "privacyPolicy": "Politique de confidentialité",
   "guestAccess": "Accès invité",
   "input": {
@@ -272,5 +271,28 @@
     "exportErrorMessage": "Erreur lors de l'export",
     "noDataToExport": "Aucune donnée à exporter",
     "sharingNotAvailable": "Le partage n'est pas disponible"
+  },
+  "logoutError": "Impossible de fermer la session en toute sécurité. Veuillez réessayer.",
+  "legacyRecovery": {
+    "title": "Récupérer les données hors ligne",
+    "pending": "%{count} enregistrements hors ligne proviennent d'une version précédente.",
+    "confirm": "Continuez uniquement si TOUS ces enregistrements appartiennent à ce serveur et à ce compte. Les données d'origine seront conservées.",
+    "cancel": "Annuler",
+    "recover": "Récupérer",
+    "error": "Impossible de récupérer les données hors ligne. Les données d'origine sont conservées."
+  },
+  "server": {
+    "label": "Serveur",
+    "official": "Serveur par défaut",
+    "address": "Code de l'entreprise ou adresse du serveur",
+    "save": "Enregistrer le serveur",
+    "selectHint": "Choisissez ou ajoutez un serveur",
+    "add": "Ajouter un serveur",
+    "empty": "Saisissez un code d'entreprise ou une adresse de serveur.",
+    "invalid": "Saisissez une adresse HTTPS valide.",
+    "duplicate": "Ce serveur est déjà dans la liste.",
+    "unavailable": "Impossible de valider ce serveur. Vérifiez l'adresse et la connexion.",
+    "loadError": "Impossible de charger les serveurs enregistrés.",
+    "syncError": "Certains éléments n'ont pas pu être synchronisés. Les éléments en attente ont été conservés."
   }
 }

@@ -5,28 +5,8 @@
   "loading": "Loading...",
   "changeInstance": "Change instance",
   "logoutError": "Could not safely close the session. Please try again.",
-  "legacyRecovery": {
-    "title": "Recover offline data",
-    "pending": "There are %{count} offline records from an earlier version.",
-    "confirm": "Only continue if ALL of these records belong to this server and this account. The original data will be kept.",
-    "cancel": "Cancel",
-    "recover": "Recover",
-    "error": "Could not recover offline data. The original data is preserved."
-  },
-  "server": {
-    "label": "Server",
-    "official": "Default server",
-    "address": "Server address",
-    "save": "Save server",
-    "selectHint": "Choose or add a server",
-    "add": "Add server",
-    "empty": "Enter a server address.",
-    "invalid": "Enter a valid HTTPS address.",
-    "duplicate": "This server is already in the list.",
-    "unavailable": "Could not validate this server. Check the address and connection.",
-    "loadError": "Could not load saved servers.",
-    "syncError": "Some items could not be synchronized. Pending items were kept."
-  },
+  "legacyRecovery": {"title":"Recover offline data","pending":"There are %{count} offline records from an earlier version.","confirm":"Only continue if ALL of these records belong to this server and this account. The original data will be kept.","cancel":"Cancel","recover":"Recover","error":"Could not recover offline data. The original data is preserved."},
+  "server": {"label":"Server","official":"Default server","address":"Company code or server address","save":"Save server","selectHint":"Choose or add a server","add":"Add server","empty":"Enter a company code or a server address.","invalid":"Enter a valid HTTPS address.","duplicate":"This server is already in the list.","unavailable":"Could not validate this server. Check the address and connection.","loadError":"Could not load saved servers.","syncError":"Some items could not be synchronized. Pending items were kept."},
   "privacyPolicy": "Privacy policy",
   "guestAccess": "Guest access",
   "input": {
@@ -64,12 +44,12 @@
     "english": "English",
     "spanish": "Español",
     "german": "Deutsch",
+    "french": "Francais",
     "kinyarwanda": "Ikinyarwanda",
     "offlineMaps": "Offline maps",
     "offlineMapsSettings": "Offline maps settings",
     "resetPassword": "Reset password",
-    "logOut": "Log out",
-    "french": "Francais"
+    "logOut": "Log out"
   },
   "home": {
     "title": "Home",
@@ -286,14 +266,13 @@
     "errorMessage": "Sync error",
     "selectAll": "Select all",
     "deselectAll": "Deselect all",
+    "exportToExcel": "Export to Excel",
     "exportTitle": "Export agriculteurs and plots",
     "exportSuccess": "Export successful",
     "exportSuccessMessage": "The Excel file has been created successfully",
     "exportError": "Export error",
     "exportErrorMessage": "Error during export",
-    "sharingNotAvailable": "Sharing is not available on this device",
-    "exportToExcel": "Export to Excel",
-    "noDataToExport": "No data to export"
-  },
-  "nameInstance": "Instance Name"
+    "noDataToExport": "No data to export",
+    "sharingNotAvailable": "Sharing is not available on this device"
+  }
 }

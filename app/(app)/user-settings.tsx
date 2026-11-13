@@ -38,6 +38,7 @@ import {
 import Selector from '@/components/common/Selector';
 import { FullWindowOverlay } from 'react-native-screens';
 import cn from '@/utils/cn';
+import useSubmitGuard from '@/utils/useSubmitGuard';
 import Colors from '@/constants/Colors';
 
 export default function UserSettings() {
@@ -54,7 +55,7 @@ export default function UserSettings() {
     refreshFarmers,
   } = useContext(AuthContext);
 
-  const [loading, setLoading] = useState(false);
+  const { busy: loading, run: runRefresh } = useSubmitGuard();
 
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['75%'], []);
@@ -109,11 +110,8 @@ export default function UserSettings() {
     }
   };
 
-  const handleRefreshFarmers = async () => {
-    setLoading(true);
-    await refreshFarmers(user as any);
-    setLoading(false);
-  };
+  const handleRefreshFarmers = () =>
+    runRefresh(() => refreshFarmers(user as any));
 
   return (
     <ScrollView className="p-5 h-full border-t bg-White border-t-LightGray">
@@ -164,6 +162,7 @@ export default function UserSettings() {
           </View>
           <Pressable
             onPress={handleRefreshFarmers}
+            disabled={loading}
             className="flex flex-row items-center justify-center py-3.5 mt-5 rounded-md bg-Orange"
           >
             {loading ? (

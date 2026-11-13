@@ -16,6 +16,7 @@ import { Farmer, ProductTypeWithCompanyId } from '@/types/farmer';
 import { User } from '@/types/user';
 import { RequestParams } from '@/types/auth';
 import cn from '@/utils/cn';
+import useSubmitGuard from '@/utils/useSubmitGuard';
 import { FileUp } from 'lucide-react-native';
 import { useSelectedFarmerState } from '@/state/state';
 import Colors from '@/constants/Colors';
@@ -40,6 +41,7 @@ export default function ListView({
   const [summary, setSummary] = useState<CardProps>({} as CardProps);
   const [loading, setLoading] = useState<boolean>(true);
   const [loadingGeoId, setLoadingGeoId] = useState<number>(-1);
+  const { busy: geoIdBusy, run: runGeoId } = useSubmitGuard();
 
   const { selectedFarmer, setSelectedFarmer } = useSelectedFarmerState();
 
@@ -303,7 +305,10 @@ export default function ListView({
     }
   };
 
-  const refreshGeoId = async (plotId?: number, isSynced?: boolean) => {
+  const refreshGeoId = (plotId?: number, isSynced?: boolean) =>
+    runGeoId(() => doRefreshGeoId(plotId, isSynced));
+
+  const doRefreshGeoId = async (plotId?: number, isSynced?: boolean) => {
     if (!isConnected || !plotId || !isSynced || guestAccess || !selectedFarmer)
       return;
 
@@ -450,7 +455,7 @@ export default function ListView({
       )}
       <View style={{ flex: 1 }}>
         <FlashList
-          extraData={[loadingGeoId, isConnected]}
+          extraData={[loadingGeoId, geoIdBusy, isConnected]}
           data={data}
           renderItem={({ item }) => (
             <View>
@@ -459,7 +464,9 @@ export default function ListView({
                   'flex flex-row items-center self-start px-2 py-1 mt-3 ml-5 -mb-3 rounded-md',
                   isConnected && !guestAccess ? 'bg-Orange' : 'bg-LightOrange'
                 )}
-                disabled={!isConnected || !item.synced || guestAccess}
+                disabled={
+                  geoIdBusy || !isConnected || !item.synced || guestAccess
+                }
                 onPress={() => refreshGeoId(item.id, item.synced)}
               >
                 {loadingGeoId === item.id && (

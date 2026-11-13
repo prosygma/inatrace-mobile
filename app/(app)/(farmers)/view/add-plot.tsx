@@ -14,6 +14,7 @@ import { Plot } from '@/types/plot';
 import { User } from '@/types/user';
 import { RequestParams } from '@/types/auth';
 import cn from '@/utils/cn';
+import useSubmitGuard from '@/utils/useSubmitGuard';
 import { useSelectedFarmerState } from '@/state/state';
 import Colors from '@/constants/Colors';
 
@@ -86,7 +87,7 @@ export default function AddPlot() {
 
   const { selectedFarmer, setSelectedFarmer } = useSelectedFarmerState();
 
-  const [loading, setLoading] = useState<boolean>(false);
+  const { busy: loading, run: runSave } = useSubmitGuard();
 
   const navigation = useNavigation();
 
@@ -203,11 +204,11 @@ export default function AddPlot() {
     return Object.values(errors).every((error) => !error);
   };
 
-  const savePlot = async () => {
+  const savePlot = () => runSave(doSavePlot);
+
+  const doSavePlot = async () => {
     if (!validateFields()) return;
     if (!selectedFarmer) return;
-
-    setLoading(true);
 
     try {
       if (
@@ -290,8 +291,6 @@ export default function AddPlot() {
       );
     } catch (error) {
       console.error('Error saving plot', error);
-    } finally {
-      setLoading(false);
     }
   };
 

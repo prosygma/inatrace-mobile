@@ -14,7 +14,14 @@ import {
 import { useNavigation } from 'expo-router';
 import { ChevronLeft, PlusCircle, XCircle } from 'lucide-react-native';
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { View, Text, Pressable, Alert, Platform } from 'react-native';
+import {
+  View,
+  Text,
+  Pressable,
+  Alert,
+  Platform,
+  ActivityIndicator,
+} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { uuid } from 'expo-modules-core';
 import realm from '@/realm/useRealm';
@@ -22,6 +29,8 @@ import { FarmerSchema } from '@/realm/schemas';
 import { RequestParams } from '@/types/auth';
 import { FullWindowOverlay } from 'react-native-screens';
 import Colors from '@/constants/Colors';
+import cn from '@/utils/cn';
+import useSubmitGuard from '@/utils/useSubmitGuard';
 
 type NewFarmerErrors = {
   lastName: boolean;
@@ -66,6 +75,7 @@ export default function NewFarmer() {
   const [searchedCountries, setSearchedCountries] =
     useState<Country[]>(countries);
   const navigation = useNavigation();
+  const { busy: saving, run: runSave } = useSubmitGuard();
   const [farmer, setFarmer] = useState<Farmer>({} as Farmer);
   const [productTypesSelect, setProductTypesSelect] = useState<ProductType[]>(
     []
@@ -290,7 +300,9 @@ export default function NewFarmer() {
     return Object.values(errors).every((error) => !error);
   };
 
-  const saveFarmer = async () => {
+  const saveFarmer = () => runSave(doSaveFarmer);
+
+  const doSaveFarmer = async () => {
     if (!validateFields()) return;
 
     const farmerBody = {
@@ -960,9 +972,14 @@ export default function NewFarmer() {
 
       <Pressable
         onPress={saveFarmer}
-        className="flex flex-row justify-center items-center mx-5 mt-5 mb-10 h-12 rounded-md bg-Orange"
+        disabled={saving}
+        className={cn(
+          'flex flex-row justify-center items-center mx-5 mt-5 mb-10 h-12 rounded-md',
+          saving ? 'bg-LightOrange' : 'bg-Orange'
+        )}
         style={ShadowButtonStyle}
       >
+        <ActivityIndicator color="white" animating={saving} className="mr-2" />
         <Text className="text-White text-[18px] font-medium">
           {i18n.t('farmers.newFarmerCreation.saveFarmer')}
         </Text>

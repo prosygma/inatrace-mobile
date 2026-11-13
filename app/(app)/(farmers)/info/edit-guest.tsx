@@ -27,6 +27,7 @@ import { FarmerSchema } from '@/realm/schemas';
 import { FullWindowOverlay } from 'react-native-screens';
 import { useSelectedFarmerState } from '@/state/state';
 import cn from '@/utils/cn';
+import useSubmitGuard from '@/utils/useSubmitGuard';
 import { isEqual } from 'lodash';
 import Colors from '@/constants/Colors';
 
@@ -58,6 +59,7 @@ export default function EditGuestFarmer() {
   const [searchedCountries, setSearchedCountries] =
     useState<Country[]>(countries);
   const navigation = useNavigation();
+  const { busy: saving, run: runSave } = useSubmitGuard();
   const [oldFarmer, _] = useState<Farmer>(selectedFarmer ?? ({} as Farmer));
   const [farmer, setFarmer] = useState<Farmer>(
     selectedFarmer ?? ({} as Farmer)
@@ -277,7 +279,9 @@ export default function EditGuestFarmer() {
     return Object.values(errors).every((error) => !error);
   };
 
-  const saveFarmer = async () => {
+  const saveFarmer = () => runSave(doSaveFarmer);
+
+  const doSaveFarmer = async () => {
     if (!validateFields()) return;
 
     const farmerBody = {
@@ -948,10 +952,10 @@ export default function EditGuestFarmer() {
           onPress={saveFarmer}
           className={cn(
             'flex flex-row justify-center items-center mx-5 mt-5 mb-10 h-12 rounded-md',
-            isDisabled ? 'bg-LightOrange' : 'bg-Orange'
+            isDisabled || saving ? 'bg-LightOrange' : 'bg-Orange'
           )}
           style={ShadowButtonStyle}
-          disabled={isDisabled}
+          disabled={isDisabled || saving}
         >
           <Text className="text-White text-[18px] font-medium">
             {i18n.t('farmers.newFarmerCreation.saveFarmer')}

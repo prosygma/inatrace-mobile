@@ -25,6 +25,7 @@ import realm from '@/realm/useRealm';
 import { FarmerSchema, PlotSchema } from '@/realm/schemas';
 import i18n from '@/locales/i18n';
 import cn from '@/utils/cn';
+import useSubmitGuard from '@/utils/useSubmitGuard';
 import { AuthContext } from '@/context/AuthContext';
 import {
   BottomSheetBackdrop,
@@ -63,7 +64,8 @@ export default function DataSync() {
   const [selectedPlots, setSelectedPlots] = useState<Set<string>>(new Set());
 
   const [loading, setLoading] = useState<boolean>(true);
-  const [syncing, setSyncing] = useState<boolean>(false);
+  const { busy: syncing, run: runSync } = useSubmitGuard();
+  const { busy: refreshing, run: runRefresh } = useSubmitGuard();
   const [exporting, setExporting] = useState<boolean>(false);
   const [editingPlot, setEditingPlot] = useState<any>(null);
 
@@ -160,7 +162,9 @@ export default function DataSync() {
     }
   };
 
-  const syncData = async () => {
+  const syncData = () => runSync(doSyncData);
+
+  const doSyncData = async () => {
     if (!isConnected) {
       Alert.alert(
         i18n.t('synced.error'),
@@ -176,8 +180,6 @@ export default function DataSync() {
       );
       return;
     }
-
-    setSyncing(true);
 
     let syncedFarmersCount = 0;
     let syncedPlotsCount = 0;
@@ -367,8 +369,6 @@ export default function DataSync() {
         i18n.t('synced.error'),
         i18n.t('synced.errorMessage') + ': ' + (error as Error).message
       );
-    } finally {
-      setSyncing(false);
     }
   };
 
@@ -555,10 +555,11 @@ export default function DataSync() {
     }
   };
 
-  const farmerRefresh = async () => {
-    await refreshFarmers(user);
-    await getItemsToSync();
-  };
+  const farmerRefresh = () =>
+    runRefresh(async () => {
+      await refreshFarmers(user);
+      await getItemsToSync();
+    });
 
   const hasDataToSync = farmersToSync.length > 0 || plotsToSync.length > 0;
 
@@ -769,8 +770,15 @@ export default function DataSync() {
             <BottomSheetScrollView className="rounded-t-md">
               <Pressable
                 onPress={farmerRefresh}
-                className="self-start px-4 py-2 mx-5 rounded-md bg-Orange"
+                disabled={refreshing}
+                className={cn(
+                  'flex flex-row items-center self-start px-4 py-2 mx-5 rounded-md',
+                  refreshing ? 'bg-LightOrange' : 'bg-Orange'
+                )}
               >
+                {refreshing && (
+                  <ActivityIndicator color="white" className="mr-2" />
+                )}
                 <Text className="text-white">
                   {i18n.t('farmers.refreshFarmers')}
                 </Text>
@@ -818,6 +826,7 @@ export default function DataSync() {
             <Pressable
               onPress={syncData}
               disabled={
+                syncing ||
                 !isConnected ||
                 (selectedPlots.size === 0 && farmersToSync.length === 0)
               }
@@ -826,6 +835,7 @@ export default function DataSync() {
                 <View
                   className={cn(
                     pressed ||
+                      syncing ||
                       !isConnected ||
                       (selectedPlots.size === 0 && farmersToSync.length === 0)
                       ? 'bg-LightOrange'
